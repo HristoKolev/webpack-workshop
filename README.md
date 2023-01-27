@@ -22,3 +22,11 @@ npm i date-fns
 ```
 "build": "webpack"
 ```
+
+# 2 - Add basic webpack configuration
+
+* Install the css loaders
+
+```shell
+npm i -D style-loader css-loader
+```
