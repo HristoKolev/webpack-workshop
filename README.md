@@ -30,3 +30,29 @@ npm i date-fns
 ```shell
 npm i -D style-loader css-loader
 ```
+
+# 3 - Add html-webpack-plugin
+
+* Install the package
+
+```shell
+npm i -D html-webpack-plugin
+```
+
+* Add the plugin to the webpack plugins section
+
+```js
+new HtmlWebpackPlugin({
+  filename: 'index.html',
+  inject: 'body',
+  template: 'src/index.html',
+})
+```
+
+* Remove the script tag from the html file and move the file to the `src` directory.
+
+* You can also add hashing to the output file names:
+ 
+```
+'[name].[contenthash].js'
+```
