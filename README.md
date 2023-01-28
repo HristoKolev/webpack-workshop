@@ -154,3 +154,25 @@ npm i -D webpack-bundle-analyzer
 ```
 "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
 ```
+
+# 6 - Add babel
+
+* Install the packages
+
+```shell
+npm i -D babel-loader @babel/core @babel/preset-env core-js
+```
+
+* Add the config files
+
+* Add the loader to the webpack config
+
+```
+  {
+    test: /\.js$/,
+    use: [
+      { loader: 'babel-loader' }
+    ],
+    exclude: /node_modules/,
+  },
+```
