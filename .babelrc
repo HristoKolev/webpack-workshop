@@ -7,5 +7,17 @@
         "corejs": "3.27"
       }
     ]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "^~(.*)": "./src/\\1",
+          "^src/(.*)": "./src/\\1"
+        }
+      }
+    ]
   ]
 }

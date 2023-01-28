@@ -205,3 +205,53 @@ npm i -D babel-plugin-module-resolver
   }
 ]
 ```
+
+# 8 - Adding TypeScript
+
+* Install packages
+
+```shell
+npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin
+
+```
+
+* Add the tsconfig.json file
+
+* Change the webpack entry field
+
+```
+entry: './src/index.ts',
+```
+
+* Add the webpack resolve configuration
+
+```
+  resolve: {
+    extensions: ['.js', '.ts' ],
+  },
+```
+
+* Add the configuration to the webpack loader
+
+```
+test: /\.[jt]s$/,
+```
+
+* Add the babel configuration
+
+```
+"@babel/preset-typescript"
+```
+
+* Add the typescript plugin to webpack
+
+```
+new ForkTsCheckerWebpackPlugin({
+  typescript: {
+    diagnosticOptions: {
+      semantic: true,
+      syntactic: true,
+    },
+  },
+}),
+```
