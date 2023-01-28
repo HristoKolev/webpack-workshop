@@ -176,3 +176,9 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
     exclude: /node_modules/,
   },
 ```
+
+* Add sourcemaps
+
+```
+devtool: 'source-map',
+```
