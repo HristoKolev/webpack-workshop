@@ -140,3 +140,17 @@ npm i -D clean-webpack-plugin
 ```
 new CleanWebpackPlugin(),
 ```
+
+# 5 - webpack-bundle-analyzer
+
+* Install the package
+
+```shell
+npm i -D webpack-bundle-analyzer
+```
+
+* Add the script to the package.json
+
+```
+"profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
+```
