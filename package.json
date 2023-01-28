@@ -20,7 +20,11 @@
   },
   "homepage": "https://github.com/HristoKolev/webpack-workshop#readme",
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
+    "core-js": "^3.27.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",

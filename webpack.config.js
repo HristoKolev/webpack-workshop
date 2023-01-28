@@ -12,6 +12,7 @@ const styleLoader = {
 
 module.exports = {
   mode: process.env.NODE_ENV,
+  devtool: 'source-map',
   entry: './src/index.js',
   output: {
     filename: '[name].[contenthash].js',
@@ -24,6 +25,13 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [
+          { loader: 'babel-loader' }
+        ],
+        exclude: /node_modules/,
+      },
       {
         test: /\.css$/i,
         use: [styleLoader, 'css-loader'],

@@ -182,3 +182,26 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
 ```
 devtool: 'source-map',
 ```
+
+# 7 - Transforming imports
+
+* Add the package
+
+```shell
+npm i -D babel-plugin-module-resolver
+```
+
+* Add the config to the babel config
+
+```
+[
+  "module-resolver",
+  {
+    "root": ["./src"],
+    "alias": {
+      "^~(.*)": "./src/\\1",
+      "^src/(.*)": "./src/\\1"
+    }
+  }
+]
+```
