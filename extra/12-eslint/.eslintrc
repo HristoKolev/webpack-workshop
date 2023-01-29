@@ -1,0 +1,65 @@
+{
+  "root": true,
+  "plugins": ["react", "@typescript-eslint", "eslint-comments", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:eslint-comments/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier"
+  ],
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": ["tsconfig.json"]
+  },
+  "settings": {
+    "import/internal-regex": "^~",
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "no-console": "error",
+    "import/no-unresolved": "off",
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
+    "react/function-component-definition": "off",
+    "no-void": "off",
+    "prettier/prettier": "error"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "jest": true
+  },
+  "overrides": [
+    {
+      "files": ["**/+(*.)+(spec|test).+(ts|js)?(x)"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
+      "rules": {
+        "testing-library/no-wait-for-multiple-assertions": "off"
+      }
+    }
+  ]
+}
