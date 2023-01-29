@@ -207,3 +207,5 @@ dll/
 *\.received\.json
 
 .idea/
+
+coverage/
