@@ -290,3 +290,27 @@ npm i -D @types/react @types/react-dom @babel/preset-react
       extensions: ['.js', '.ts', '.jsx', '.tsx' ],
     ```
 
+# 10 - React Testing Library + Jest
+
+* Install packages
+
+```shell
+npm i -D @testing-library/dom @testing-library/react
+npm i -D @testing-library/user-event @testing-library/jest-dom
+npm i -D jest jest-environment-jsdom
+npm i -D node-fetch@2 msw identity-obj-proxy
+```
+
+* Add the config files
+
+* Add the npm script
+
+```
+"test": "cross-env NODE_ENV=test jest",
+```
+
+* Add a line to gitignore
+
+```
+coverage/
+```

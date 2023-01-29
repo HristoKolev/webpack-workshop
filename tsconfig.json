@@ -5,6 +5,7 @@
     "strict": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
     "baseUrl": "./",
     "rootDir": "./",
     "module": "esnext",

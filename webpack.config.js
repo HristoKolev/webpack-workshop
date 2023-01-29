@@ -14,7 +14,7 @@ const styleLoader = {
 module.exports = {
   mode: process.env.NODE_ENV,
   devtool: 'source-map',
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist')
@@ -27,7 +27,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.[jt]s$/,
+        test: /\.[jt]sx?$/,
         use: [
           { loader: 'babel-loader' }
         ],
@@ -68,7 +68,7 @@ module.exports = {
         : []),
   ],
   resolve: {
-    extensions: ['.js', '.ts' ],
+    extensions: ['.js', '.ts', '.jsx', '.tsx' ],
   },
   stats: {
     errorDetails: true,
