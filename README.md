@@ -255,3 +255,38 @@ new ForkTsCheckerWebpackPlugin({
   },
 }),
 ```
+
+# 9 - Adding React
+
+
+```shell
+npm i react react-dom
+npm i -D @types/react @types/react-dom @babel/preset-react
+```
+
+* Add the babel preset
+
+```
+["@babel/preset-react", { "runtime": "automatic" }],
+```
+
+* Add the jsx typescript setting
+
+```
+"jsx": "react-jsx",
+```
+
+* Change webpack config
+  * change the entry setting
+    ```
+      entry: './src/index.tsx',
+    ``` 
+  * change the loader matcher
+    ```
+      test: /\.[jt]sx?$/,
+    ```
+  * change the resolve.extensions setting
+    ```
+      extensions: ['.js', '.ts', '.jsx', '.tsx' ],
+    ```
+
