@@ -6,7 +6,7 @@ export const App = (): JSX.Element => {
   const [message, setMessage] = useState<string | undefined>();
 
   useEffect(() => {
-    fetch('http://localhost:3001/')
+    void fetch('http://localhost:3001/')
       .then((res) => res.text())
       .then(setMessage);
   }, []);
