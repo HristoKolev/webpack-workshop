@@ -386,3 +386,14 @@ new ESLintPlugin({
 ```
 
 - Doesn't work for test files. Why?
+
+- Demonstrate WebStorm config 
+- Demonstrate VSCode config
+  - https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+
+```
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["typescript", "typescriptreact"]
+```
