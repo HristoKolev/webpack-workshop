@@ -339,3 +339,50 @@ npm i -D prettier
   "prettier.useEditorConfig": true,
   "prettier.configPath": ".prettierrc"
 ```
+
+# 12 - eslint
+
+- Install the packages
+
+```shell
+npm i -D eslint
+npm i -D eslint-config-airbnb
+npm i -D eslint-plugin-import
+npm i -D eslint-plugin-react
+npm i -D eslint-plugin-react-hooks
+npm i -D eslint-plugin-jsx-a11y
+npm i -D eslint-config-airbnb-typescript
+npm i -D @typescript-eslint/eslint-plugin
+npm i -D @typescript-eslint/parser
+npm i -D eslint-plugin-eslint-comments
+npm i -D eslint-import-resolver-alias
+npm i -D eslint-config-prettier
+npm i -D eslint-plugin-prettier
+npm i -D eslint-plugin-jest
+npm i -D eslint-plugin-testing-library
+```
+
+- Add the eslint config
+
+- Add the npm script
+
+```
+"lint": "eslint ./"
+```
+
+- Install the webpack plugin
+
+```shell
+npm i -D eslint-webpack-plugin
+```
+
+- Add the plugin to the webpack configuration
+
+```
+new ESLintPlugin({
+  extensions: ['js', 'jsx', 'ts', 'tsx'],
+  failOnWarning: true,
+}),
+```
+
+- Doesn't work for test files. Why?

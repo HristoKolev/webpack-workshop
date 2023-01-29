@@ -1,14 +1,14 @@
 const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const styleLoader = {
   loader:
-      process.env.NODE_ENV === 'development'
-          ? 'style-loader'
-          : MiniCssExtractPlugin.loader,
+    process.env.NODE_ENV === 'development'
+      ? 'style-loader'
+      : MiniCssExtractPlugin.loader,
 };
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
     static: false,
@@ -28,9 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.[jt]sx?$/,
-        use: [
-          { loader: 'babel-loader' }
-        ],
+        use: [{ loader: 'babel-loader' }],
         exclude: /node_modules/,
       },
       {
@@ -59,16 +57,16 @@ module.exports = {
       },
     }),
     ...(process.env.NODE_ENV === 'production'
-        ? [
+      ? [
           new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
             chunkFilename: '[id].[contenthash].css',
           }),
         ]
-        : []),
+      : []),
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx' ],
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
   },
   stats: {
     errorDetails: true,
