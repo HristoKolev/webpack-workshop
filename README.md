@@ -313,7 +313,7 @@ npm i -D node-fetch@2 msw identity-obj-proxy
 coverage/
 ```
 
-- Add **mocks** to the typescript include field
+- Add `__mocks__` to the typescript include field
 
 ```
   "include": ["src", "__mocks__"]
