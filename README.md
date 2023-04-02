@@ -397,3 +397,36 @@ new ESLintPlugin({
   },
   "eslint.validate": ["typescript", "typescriptreact"]
 ```
+
+# 13 - SCSS
+
+- Install the packages
+ 
+```shell
+npm i -D sass sass-loader resolve-url-loader
+```
+
+- Add the webpack loader
+
+```
+{
+  test: /\.scss$/,
+  use: [
+    styleLoader,
+    { loader: 'css-loader' },	  
+    {
+      loader: 'resolve-url-loader',
+      options: {
+        sourceMap: true,
+      },
+    },
+    {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: true,
+        implementation: require('sass'),
+      },
+    },
+  ],
+},
+```

@@ -37,6 +37,26 @@ module.exports = {
         use: [styleLoader, 'css-loader'],
       },
       {
+        test: /\.scss$/,
+        use: [
+          styleLoader,
+          { loader: 'css-loader' },
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              implementation: require('sass'),
+            },
+          },
+        ],
+      },
+      {
         test: /\.(ico|gif|png|jpg|jpeg|svg|woff|woff2|eot|ttf|otf)$/i,
         type: 'asset',
       },
