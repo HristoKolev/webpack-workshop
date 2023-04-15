@@ -30,13 +30,14 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [styleLoader, 'css-loader'],
+        use: [styleLoader, 'css-loader', { loader: 'postcss-loader' }],
       },
       {
         test: /\.scss$/,
         use: [
           styleLoader,
           { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
           {
             loader: 'resolve-url-loader',
             options: {
@@ -84,9 +85,7 @@ module.exports = {
             chunkFilename: '[id].[contenthash].css',
           }),
         ]
-      : [
-        new BrowserSyncPlugin(require('./browsersync-config')),
-      ]),
+      : [new BrowserSyncPlugin(require('./browsersync-config'))]),
   ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],

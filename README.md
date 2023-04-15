@@ -460,3 +460,32 @@ new BrowserSyncPlugin(require('./browsersync-config')),
 ```
 "start": "cross-env NODE_ENV=development webpack --watch",
 ```
+
+# 15 - tailwind
+
+* install the packages
+
+```shell
+npm i -D tailwindcss postcss postcss-loader cssnano
+```
+
+* copy the tailwind, postcss configs
+
+* add the js config files to the eslint ignore list
+ 
+```
+postcss.config.js
+tailwind.config.js
+```
+* add the postcss loader after the `css-loader`.
+
+```
+{ loader: 'postcss-loader' },
+```
+
+* add the tailwind directives on top of your css file
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```

@@ -13,7 +13,7 @@ export const App = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="text">
+    <div className="text text-center">
       <div>Hello Webpack</div>
       <div data-testid="date-label">{formatDate(new Date())}</div>
       {message && <div data-testid="server-message">{message}</div>}
