@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button, CssBaseline } from '@mui/material';
 
 import { formatDate } from '~helpers';
 import logoUrl from '~logo.png';
@@ -14,11 +15,15 @@ export const App = (): JSX.Element => {
 
   return (
     <div className="text text-center">
+      <CssBaseline />
       <div>Hello Webpack</div>
       <div data-testid="date-label">{formatDate(new Date())}</div>
       {message && <div data-testid="server-message">{message}</div>}
       <div>
         <img src={logoUrl} alt="logo" />
+      </div>
+      <div>
+        <Button variant="contained">Cats</Button>
       </div>
     </div>
   );

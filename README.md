@@ -489,3 +489,24 @@ tailwind.config.js
 @tailwind components;
 @tailwind utilities;
 ```
+
+# 16 - MUI
+
+```shell
+npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material
+```
+
+* import the fonts
+
+```
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+```
+
+* add the MUI baseline component
+
+```jsx
+<CssBaseline />
+```
