@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const styleLoader = {
   loader:
@@ -20,11 +21,6 @@ module.exports = {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
   },
-  devServer: {
-    static: false,
-    compress: true,
-    port: 3000,
-  },
   module: {
     rules: [
       {
@@ -34,7 +30,28 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [styleLoader, 'css-loader'],
+        use: [styleLoader, 'css-loader', { loader: 'postcss-loader' }],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          styleLoader,
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              implementation: require('sass'),
+            },
+          },
+        ],
       },
       {
         test: /\.(ico|gif|png|jpg|jpeg|svg|woff|woff2|eot|ttf|otf)$/i,
@@ -68,7 +85,7 @@ module.exports = {
             chunkFilename: '[id].[contenthash].css',
           }),
         ]
-      : []),
+      : [new BrowserSyncPlugin(require('./browsersync-config'))]),
   ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
