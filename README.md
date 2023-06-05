@@ -397,3 +397,116 @@ new ESLintPlugin({
   },
   "eslint.validate": ["typescript", "typescriptreact"]
 ```
+
+# 13 - SCSS
+
+- Install the packages
+ 
+```shell
+npm i -D sass sass-loader resolve-url-loader
+```
+
+- Add the webpack loader
+
+```
+{
+  test: /\.scss$/,
+  use: [
+    styleLoader,
+    { loader: 'css-loader' },	  
+    {
+      loader: 'resolve-url-loader',
+      options: {
+        sourceMap: true,
+      },
+    },
+    {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: true,
+        implementation: require('sass'),
+      },
+    },
+  ],
+},
+```
+
+# 14 - BrowserSync
+
+* Install the packages
+
+```shell
+npm i -D browser-sync-webpack-plugin connect-history-api-fallback http-proxy-middleware
+```
+
+* copy the BrowserSync config
+
+* add the browsersync config to the eslint ignore list
+
+```
+browsersync-config.js
+```
+
+* remove the webpack dev server configuration
+
+* add the browsersync webpack plugin
+
+```
+new BrowserSyncPlugin(require('./browsersync-config')),
+```
+
+* change the run script
+
+```
+"start": "cross-env NODE_ENV=development webpack --watch",
+```
+
+# 15 - tailwind
+
+* install the packages
+
+```shell
+npm i -D tailwindcss postcss postcss-loader cssnano
+```
+
+* copy the tailwind, postcss configs
+
+* add the js config files to the eslint ignore list
+ 
+```
+postcss.config.js
+tailwind.config.js
+```
+* add the postcss loader after the `css-loader`.
+
+```
+{ loader: 'postcss-loader' },
+```
+
+* add the tailwind directives on top of your css file
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+# 16 - MUI
+
+```shell
+npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material
+```
+
+* import the fonts
+
+```
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+```
+
+* add the MUI baseline component
+
+```jsx
+<CssBaseline />
+```
