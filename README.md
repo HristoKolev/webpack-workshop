@@ -1,11 +1,15 @@
-# 0 - Create project with npm
+# Webpack workshop
+
+TODO: Describe what this is, why it exists and how it should be used.
+
+## 0 - Create project with npm
 
 ```shell
 npm init -y
 
 ```
 
-# 1 - Install webpack
+## 1 - Install webpack
 
 ```shell
 npm i webpack webpack-cli -D
@@ -23,7 +27,7 @@ npm i date-fns
 "build": "webpack"
 ```
 
-# 2 - Add basic webpack configuration
+## 2 - Add basic webpack configuration
 
 - Install the css loaders
 
@@ -31,7 +35,7 @@ npm i date-fns
 npm i -D style-loader css-loader
 ```
 
-# 3 - Add html-webpack-plugin
+## 3 - Add html-webpack-plugin
 
 - Install the package
 
@@ -57,7 +61,7 @@ new HtmlWebpackPlugin({
 '[name].[contenthash].js'
 ```
 
-# 4 - dev and production builds ft. Webpack Dev Server
+## 4 - dev and production builds ft. Webpack Dev Server
 
 - Add webpack dev server
 
@@ -141,7 +145,7 @@ npm i -D clean-webpack-plugin
 new CleanWebpackPlugin(),
 ```
 
-# 5 - webpack-bundle-analyzer
+## 5 - webpack-bundle-analyzer
 
 - Install the package
 
@@ -155,7 +159,7 @@ npm i -D webpack-bundle-analyzer
 "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
 ```
 
-# 6 - Add babel
+## 6 - Add babel
 
 - Install the packages
 
@@ -183,7 +187,7 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
 devtool: 'source-map',
 ```
 
-# 7 - Transforming imports
+## 7 - Transforming imports
 
 - Add the package
 
@@ -206,7 +210,7 @@ npm i -D babel-plugin-module-resolver
 ]
 ```
 
-# 8 - Adding TypeScript
+## 8 - Adding TypeScript
 
 - Install packages
 
@@ -255,7 +259,7 @@ new ForkTsCheckerWebpackPlugin({
 }),
 ```
 
-# 9 - Adding React
+## 9 - Adding React
 
 ```shell
 npm i react react-dom
@@ -288,7 +292,7 @@ npm i -D @types/react @types/react-dom @babel/preset-react
       extensions: ['.js', '.ts', '.jsx', '.tsx' ],
     ```
 
-# 10 - React Testing Library + Jest
+## 10 - React Testing Library + Jest
 
 - Install packages
 
@@ -319,7 +323,7 @@ coverage/
   "include": ["src", "__mocks__"]
 ```
 
-# 11 - prettier
+## 11 - prettier
 
 - Install the package
 
@@ -340,7 +344,7 @@ npm i -D prettier
   "prettier.configPath": ".prettierrc"
 ```
 
-# 12 - eslint
+## 12 - eslint
 
 - Install the packages
 
@@ -398,7 +402,7 @@ new ESLintPlugin({
   "eslint.validate": ["typescript", "typescriptreact"]
 ```
 
-# 13 - SCSS
+## 13 - SCSS
 
 - Install the packages
  
@@ -431,7 +435,7 @@ npm i -D sass sass-loader resolve-url-loader
 },
 ```
 
-# 14 - BrowserSync
+## 14 - BrowserSync
 
 * Install the packages
 
@@ -461,7 +465,7 @@ new BrowserSyncPlugin(require('./browsersync-config')),
 "start": "cross-env NODE_ENV=development webpack --watch",
 ```
 
-# 15 - tailwind
+## 15 - tailwind
 
 * install the packages
 
@@ -490,7 +494,7 @@ tailwind.config.js
 @tailwind utilities;
 ```
 
-# 16 - MUI
+## 16 - MUI
 
 ```shell
 npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material
