@@ -1,30 +1,102 @@
-import { useEffect, useState } from 'react';
-import { Button, CssBaseline } from '@mui/material';
+import { memo, useCallback, useEffect, useState } from 'react';
 
-import { formatDate } from '~helpers';
-import logoUrl from '~logo.png';
+import { PetListItem } from '~utils/server-data-model';
+import { ErrorIndicator } from '~shared/ErrorIndicator';
+import { LoadingIndicator } from '~shared/LoadingIndicator';
+import { DeletePetModal } from '~pages/DeletePetModal';
+import { EditPetModal } from '~pages/EditPetModal';
+import { PetList } from '~pages/PetList';
+import { useAppDispatch, useAppSelector } from '~redux/createReduxStore';
+import {
+  fetchPetsData,
+  globalActions,
+  globalSelector,
+} from '~redux/globalSlice';
 
-export const App = (): JSX.Element => {
-  const [message, setMessage] = useState<string | undefined>();
+import './App.css';
+
+export const App = memo((): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const { petListById, petKinds, isError, isLoading } =
+    useAppSelector(globalSelector);
+
+  const fetchListData = useCallback(() => {
+    void dispatch(fetchPetsData());
+  }, [dispatch]);
 
   useEffect(() => {
-    void fetch('http://localhost:3001/')
-      .then((res) => res.text())
-      .then(setMessage);
+    fetchListData();
+  }, [fetchListData]);
+
+  const [deletePet, setDeletePet] = useState<PetListItem | undefined>();
+  const handleOnDeleteClick = useCallback(
+    (petId: number) => setDeletePet(petListById?.[petId]),
+    [petListById]
+  );
+  const handleOnDeleteModalClose = useCallback(
+    () => setDeletePet(undefined),
+    []
+  );
+
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
+  const [editPetId, setEditPetId] = useState<number | undefined>();
+
+  const handleOnEditClick = useCallback((petId: number) => {
+    setEditPetId(petId);
+    setShowEditModal(true);
+  }, []);
+
+  const handleOnEditModalClose = useCallback(() => {
+    setEditPetId(undefined);
+    setShowEditModal(false);
+    dispatch(globalActions.clearSelectedPet());
+  }, [dispatch]);
+
+  const handleOnAddClick = useCallback(() => {
+    setEditPetId(undefined);
+    setShowEditModal(true);
   }, []);
 
   return (
-    <div className="text text-center">
-      <CssBaseline />
-      <div>Hello Webpack</div>
-      <div data-testid="date-label">{formatDate(new Date())}</div>
-      {message && <div data-testid="server-message">{message}</div>}
-      <div>
-        <img src={logoUrl} alt="logo" />
+    <main>
+      <div className="pet-list-page-header">
+        <h2>Pet Store</h2>
+        {petKinds && (
+          <button
+            type="button"
+            className="custom-button success-button add-pet-button"
+            onClick={handleOnAddClick}
+          >
+            Add Pet
+          </button>
+        )}
       </div>
-      <div>
-        <Button variant="contained">Cats</Button>
+
+      <hr />
+
+      <div className="pet-list-page-content">
+        {isError && <ErrorIndicator />}
+        {isLoading && <LoadingIndicator />}
+        {!isLoading && !isError && (
+          <PetList onEdit={handleOnEditClick} onDelete={handleOnDeleteClick} />
+        )}
+        {deletePet && (
+          <DeletePetModal
+            pet={deletePet}
+            onClose={handleOnDeleteModalClose}
+            onDeleted={fetchListData}
+          />
+        )}
+        {showEditModal && (
+          <EditPetModal
+            petId={editPetId}
+            onClose={handleOnEditModalClose}
+            onSaved={fetchListData}
+            onDeleted={fetchListData}
+          />
+        )}
       </div>
-    </div>
+    </main>
   );
-};
+});
