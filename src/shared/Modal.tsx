@@ -1,6 +1,8 @@
 import { memo, ReactNode, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
+import closeModalImage from './close-modal.png';
+
 import './Modal.css';
 
 export interface ModalProps {
@@ -32,7 +34,7 @@ const ModalImpl = memo(
           {children}
           <img
             role="button"
-            src="./icons8-cancel-30.png"
+            src={closeModalImage}
             className="modal-close modal-exit"
             alt="Close modal"
             onClick={handleOnClose}

@@ -70,8 +70,7 @@ npm i -D webpack-dev-server
 ```
 
 ```
-  devServer: {
-    static: false,
+  devServer: {    
     compress: true,
     port: 3000,
   },
@@ -144,6 +143,22 @@ npm i -D clean-webpack-plugin
 ```
 new CleanWebpackPlugin(),
 ```
+
+- Add copy-webpack-plugin
+
+```shell
+npm i -D copy-webpack-plugin
+```
+
+- Add the plugin to the configuration
+
+```
+new CopyWebpackPlugin({
+  patterns: [{ from: 'public' }],
+}),
+```
+
+- Create a `public` directory.
 
 ## 5 - webpack-bundle-analyzer
 
@@ -300,7 +315,7 @@ npm i -D @types/react @types/react-dom @babel/preset-react
 npm i -D @testing-library/dom @testing-library/react
 npm i -D @testing-library/user-event @testing-library/jest-dom
 npm i -D jest jest-environment-jsdom
-npm i -D node-fetch@2 msw identity-obj-proxy
+npm i -D node-fetch@2 msw
 ```
 
 - Add the config files

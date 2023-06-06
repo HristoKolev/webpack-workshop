@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const styleLoader = {
   loader:
@@ -20,6 +20,10 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+  },
+  devServer: {
+    compress: true,
+    port: 3000,
   },
   module: {
     rules: [
@@ -66,6 +70,9 @@ module.exports = {
       inject: 'body',
       template: 'src/index.html',
     }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'public' }],
+    }),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
         diagnosticOptions: {
@@ -85,7 +92,7 @@ module.exports = {
             chunkFilename: '[id].[contenthash].css',
           }),
         ]
-      : [new BrowserSyncPlugin(require('./browsersync-config'))]),
+      : []),
   ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
