@@ -8,3 +8,4 @@ browsersync-config.js
 webpack.config.js
 postcss.config.js
 tailwind.config.js
+/extra/
