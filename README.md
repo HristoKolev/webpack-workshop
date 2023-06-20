@@ -157,7 +157,13 @@ new CopyWebpackPlugin({
 }),
 ```
 
-- Create a `public` directory.
+- Add the `public` directory
+
+- Modify `index.html` and to this line to the `head` tag
+
+```html
+<link rel="icon" href="/favicon.ico" />
+```
 
 ## 5 - webpack-bundle-analyzer
 
