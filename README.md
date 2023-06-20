@@ -71,7 +71,6 @@ npm i -D webpack-dev-server
 
 ```
   devServer: {    
-    compress: true,
     port: 3000,
   },
 ```
@@ -450,37 +449,7 @@ npm i -D sass sass-loader resolve-url-loader
 },
 ```
 
-## 14 - BrowserSync
-
-* Install the packages
-
-```shell
-npm i -D browser-sync-webpack-plugin connect-history-api-fallback http-proxy-middleware
-```
-
-* copy the BrowserSync config
-
-* add the browsersync config to the eslint ignore list
-
-```
-browsersync-config.js
-```
-
-* remove the webpack dev server configuration
-
-* add the browsersync webpack plugin
-
-```
-new BrowserSyncPlugin(require('./browsersync-config')),
-```
-
-* change the run script
-
-```
-"start": "cross-env NODE_ENV=development webpack --watch",
-```
-
-## 15 - tailwind
+## 14 - tailwind
 
 * install the packages
 
@@ -509,7 +478,7 @@ tailwind.config.js
 @tailwind utilities;
 ```
 
-## 16 - MUI
+## 15 - MUI
 
 ```shell
 npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material

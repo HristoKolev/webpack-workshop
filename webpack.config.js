@@ -22,7 +22,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
-    compress: true,
     port: 3000,
   },
   module: {
