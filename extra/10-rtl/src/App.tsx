@@ -8,7 +8,11 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     fetch('http://localhost:3001/')
       .then((res) => res.text())
-      .then(setMessage);
+      .then(setMessage)
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      });
   }, []);
 
   return (

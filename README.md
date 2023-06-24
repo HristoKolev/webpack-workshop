@@ -6,7 +6,6 @@ TODO: Describe what this is, why it exists and how it should be used.
 
 ```shell
 npm init -y
-
 ```
 
 ## 1 - Install webpack
@@ -34,6 +33,8 @@ npm i date-fns
 ```shell
 npm i -D style-loader css-loader
 ```
+
+Rename the `index.js` to `main.js`
 
 ## 3 - Add html-webpack-plugin
 
@@ -70,7 +71,7 @@ npm i -D webpack-dev-server
 ```
 
 ```
-  devServer: {    
+  devServer: {
     port: 3000,
   },
 ```
@@ -243,7 +244,7 @@ npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin
 - Change the webpack entry field
 
 ```
-entry: './src/index.ts',
+entry: './src/main.ts',
 ```
 
 - Add the webpack resolve configuration
@@ -284,12 +285,33 @@ new ForkTsCheckerWebpackPlugin({
 ```shell
 npm i react react-dom
 npm i -D @types/react @types/react-dom @babel/preset-react
+npm i -D @pmmmwh/react-refresh-webpack-plugin react-refresh
 ```
 
 - Add the babel preset
 
 ```
 ["@babel/preset-react", { "runtime": "automatic" }],
+```
+
+- Add the `react-refresh` babel plugin
+
+```
+...(process.env.NODE_ENV === 'development' ? ['react-refresh/babel'] : []),
+```
+
+- Enable full hot reloading for webpack-dev-server
+
+```
+hot: true,
+```
+
+- Add the `@pmmmwh/react-refresh-webpack-plugin` webpack plugin only in development mode
+
+```
+...(process.env.NODE_ENV === 'development'
+  ? [new ReactRefreshWebpackPlugin()]
+  : []),
 ```
 
 - Add the jsx typescript setting
@@ -301,7 +323,7 @@ npm i -D @types/react @types/react-dom @babel/preset-react
 - Change webpack config
   - change the entry setting
     ```
-      entry: './src/index.tsx',
+      entry: './src/main.tsx',
     ```
   - change the loader matcher
     ```
@@ -353,6 +375,18 @@ npm i -D prettier
 
 - Add the config files
 
+- Add the npm script
+
+```
+"fmt": "prettier --write .",
+```
+
+- Run the format script
+
+```shell
+npm run fmt
+```
+
 - Demonstrate WebStorm config
 - Demonstrate VSCode config
   - https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
@@ -388,10 +422,11 @@ npm i -D eslint-plugin-testing-library
 
 - Add the eslint config
 
-- Add the npm script
+- Add the npm scripts
 
 ```
-"lint": "eslint ./"
+"lint": "eslint ./ --max-warnings 0",
+"lint-fix": "npm run lint -- --fix"
 ```
 
 - Install the webpack plugin
@@ -411,7 +446,7 @@ new ESLintPlugin({
 
 - Doesn't work for test files. Why?
 
-- Demonstrate WebStorm config 
+- Demonstrate WebStorm config
 - Demonstrate VSCode config
   - https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
@@ -425,7 +460,7 @@ new ESLintPlugin({
 ## 13 - SCSS
 
 - Install the packages
- 
+
 ```shell
 npm i -D sass sass-loader resolve-url-loader
 ```
@@ -437,7 +472,7 @@ npm i -D sass sass-loader resolve-url-loader
   test: /\.scss$/,
   use: [
     styleLoader,
-    { loader: 'css-loader' },	  
+    { loader: 'css-loader' },
     {
       loader: 'resolve-url-loader',
       options: {
@@ -457,27 +492,29 @@ npm i -D sass sass-loader resolve-url-loader
 
 ## 14 - tailwind
 
-* install the packages
+- install the packages
 
 ```shell
 npm i -D tailwindcss postcss postcss-loader cssnano
 ```
 
-* copy the tailwind, postcss configs
+- copy the tailwind, postcss configs
 
-* add the js config files to the eslint ignore list
- 
+- add the js config files to the eslint ignore list
+
 ```
 postcss.config.js
 tailwind.config.js
 ```
-* add the postcss loader after the `css-loader`.
+
+- add the postcss loader after the `css-loader`.
 
 ```
 { loader: 'postcss-loader' },
 ```
 
-* add the tailwind directives on top of your css file
+- add the tailwind directives on top of your css file
+
 ```
 @tailwind base;
 @tailwind components;
@@ -490,7 +527,7 @@ tailwind.config.js
 npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material
 ```
 
-* import the fonts
+- import the fonts
 
 ```
 import '@fontsource/roboto/300.css';
@@ -499,7 +536,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 ```
 
-* add the MUI baseline component
+- add the MUI baseline component
 
 ```jsx
 <CssBaseline />

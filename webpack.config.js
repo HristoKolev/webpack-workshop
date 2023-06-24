@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const styleLoader = {
   loader:
@@ -16,13 +17,14 @@ const styleLoader = {
 module.exports = {
   mode: process.env.NODE_ENV,
   devtool: 'source-map',
-  entry: './src/index.tsx',
+  entry: './src/main.tsx',
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
     port: 3000,
+    hot: true,
   },
   module: {
     rules: [
@@ -91,6 +93,9 @@ module.exports = {
             chunkFilename: '[id].[contenthash].css',
           }),
         ]
+      : []),
+    ...(process.env.NODE_ENV === 'development'
+      ? [new ReactRefreshWebpackPlugin()]
       : []),
   ],
   resolve: {

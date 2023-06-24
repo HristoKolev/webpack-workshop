@@ -49,6 +49,7 @@
     "prettier"
   ],
   "rules": {
+    "linebreak-style": ["error", "unix"],
     "react-refresh/only-export-components": "warn",
     "no-console": "error",
     "import/no-unresolved": "off",

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "noEmit": true,
     "strict": true,
     "allowJs": false,
@@ -11,18 +11,10 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "pretty": true,
     "noImplicitAny": true,
-    "lib": [
-      "ES2015",
-      "ES2016",
-      "ES2017",
-      "ES2018",
-      "ES2019",
-      "ES2020",
-      "ES2021",
-      "DOM"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
       "~*": ["src/*"],
       "src/*": ["src/*"]
