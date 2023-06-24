@@ -8,7 +8,7 @@ TODO: Describe what this is, why it exists and how it should be used.
 npm init -y
 ```
 
-## 1 - Install webpack
+## 1 - Installing webpack
 
 ```shell
 npm i webpack webpack-cli -D
@@ -26,7 +26,7 @@ npm i date-fns
 "build": "webpack"
 ```
 
-## 2 - Add basic webpack configuration
+## 2 - Basic webpack configuration
 
 - Install the css loaders
 
@@ -36,7 +36,7 @@ npm i -D style-loader css-loader
 
 Rename the `index.js` to `main.js`
 
-## 3 - Add html-webpack-plugin
+## 3 - html-webpack-plugin
 
 - Install the package
 
@@ -180,7 +180,7 @@ npm i -D webpack-bundle-analyzer
 "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
 ```
 
-## 6 - Add babel
+## 6 - Babel
 
 - Install the packages
 
@@ -208,7 +208,7 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
 devtool: 'source-map',
 ```
 
-## 7 - Transforming imports
+## 7 - transforming imports
 
 - Add the package
 
@@ -231,7 +231,7 @@ npm i -D babel-plugin-module-resolver
 ]
 ```
 
-## 8 - Adding TypeScript
+## 8 - TypeScript
 
 - Install packages
 
@@ -280,7 +280,7 @@ new ForkTsCheckerWebpackPlugin({
 }),
 ```
 
-## 9 - Adding React
+## 9 - React
 
 ```shell
 npm i react react-dom
@@ -334,7 +334,7 @@ hot: true,
       extensions: ['.js', '.ts', '.jsx', '.tsx' ],
     ```
 
-## 10 - React Testing Library + Jest
+## 10 - Jest & Testing Library
 
 - Install packages
 
@@ -365,7 +365,7 @@ coverage/
   "include": ["src", "__mocks__"]
 ```
 
-## 11 - prettier
+## 11 - Prettier
 
 - Install the package
 
@@ -398,7 +398,7 @@ npm run fmt
   "prettier.configPath": ".prettierrc"
 ```
 
-## 12 - eslint
+## 12 - ESLint
 
 - Install the packages
 
@@ -457,7 +457,7 @@ new ESLintPlugin({
   "eslint.validate": ["typescript", "typescriptreact"]
 ```
 
-## 13 - SCSS
+## 13 - SCSS (OPTIONAL)
 
 - Install the packages
 
@@ -490,7 +490,7 @@ npm i -D sass sass-loader resolve-url-loader
 },
 ```
 
-## 14 - tailwind
+## 14 - Tailwind (OPTIONAL)
 
 - install the packages
 
@@ -521,7 +521,7 @@ tailwind.config.js
 @tailwind utilities;
 ```
 
-## 15 - MUI
+## 15 - MUI (OPTIONAL)
 
 ```shell
 npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material
@@ -541,3 +541,4 @@ import '@fontsource/roboto/700.css';
 ```jsx
 <CssBaseline />
 ```
+
