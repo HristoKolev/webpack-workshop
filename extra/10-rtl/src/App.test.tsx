@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { App } from '~App';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import { format } from 'date-fns';
+
+import { App } from '~App';
 
 const server = setupServer(
   rest.get('http://localhost:3001/', (_req, res, ctx) =>

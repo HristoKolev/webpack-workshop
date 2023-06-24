@@ -1,6 +1,7 @@
+import { useEffect, useState, JSX } from 'react';
+
 import { formatDate } from '~helpers';
 import logoUrl from '~logo.png';
-import { useEffect, useState, JSX } from 'react';
 
 export const App = (): JSX.Element => {
   const [message, setMessage] = useState<string | undefined>();
