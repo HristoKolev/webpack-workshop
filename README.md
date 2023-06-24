@@ -342,7 +342,7 @@ hot: true,
 npm i -D @testing-library/dom @testing-library/react
 npm i -D @testing-library/user-event @testing-library/jest-dom
 npm i -D jest jest-environment-jsdom
-npm i -D node-fetch@2 msw
+npm i -D whatwg-fetch msw
 ```
 
 - Add the config files

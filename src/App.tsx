@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, JSX } from 'react';
 import { Button, CssBaseline } from '@mui/material';
 
 import { formatDate } from '~helpers';
@@ -11,10 +11,8 @@ export const App = (): JSX.Element => {
     fetch('http://localhost:3001/')
       .then((res) => res.text())
       .then(setMessage)
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error(error);
-      });
+      // eslint-disable-next-line no-console
+      .catch(console.error);
   }, []);
 
   return (
