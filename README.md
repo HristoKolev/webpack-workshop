@@ -540,6 +540,7 @@ npm run format
 ```shell
 npm i -D eslint
 npm i -D eslint-config-airbnb
+npm i -D eslint-plugin-deprecation
 npm i -D eslint-plugin-import
 npm i -D eslint-plugin-react
 npm i -D eslint-plugin-react-hooks

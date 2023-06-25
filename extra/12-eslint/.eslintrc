@@ -46,9 +46,11 @@
     "react",
     "@typescript-eslint",
     "eslint-comments",
-    "prettier"
+    "prettier",
+    "deprecation"
   ],
   "rules": {
+    "deprecation/deprecation": "error",
     "linebreak-style": ["error", "unix"],
     "react-refresh/only-export-components": "warn",
     "no-console": "error",
