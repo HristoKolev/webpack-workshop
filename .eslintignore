@@ -4,8 +4,8 @@ package-lock.json
 
 jest.config.js
 setupTests.js
-browsersync-config.js
 webpack.config.js
+.babelrc.js
 postcss.config.js
 tailwind.config.js
 /extra/

@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { formatDate } from 'src/helpers';

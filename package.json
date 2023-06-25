@@ -1,7 +1,6 @@
 {
   "name": "webpack-workshop",
   "version": "1.0.0",
-  "description": "",
   "private": true,
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
@@ -12,16 +11,16 @@
     "lint": "eslint ./ --max-warnings 0",
     "lint-fix": "npm run lint -- --fix"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HristoKolev/webpack-workshop.git"
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.3",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.6",
+    "date-fns": "^2.30.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
-  "author": "",
-  "license": "",
-  "bugs": {
-    "url": "https://github.com/HristoKolev/webpack-workshop/issues"
-  },
-  "homepage": "https://github.com/HristoKolev/webpack-workshop#readme",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
@@ -39,7 +38,6 @@
     "babel-loader": "^9.1.2",
     "babel-plugin-module-resolver": "^5.0.0",
     "clean-webpack-plugin": "^4.0.0",
-    "connect-history-api-fallback": "^2.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.31.0",
     "cross-env": "^7.0.3",
@@ -62,8 +60,6 @@
     "eslint-webpack-plugin": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.3",
-    "http-proxy-middleware": "^2.0.6",
-    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "mini-css-extract-plugin": "^2.7.6",
@@ -83,15 +79,5 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "whatwg-fetch": "^3.6.2"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/roboto": "^5.0.3",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.6",
-    "date-fns": "^2.30.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   }
 }

@@ -2,29 +2,42 @@
 
 TODO: Describe what this is, why it exists and how it should be used.
 
-## 0 - Create project with npm
+## 0 - NPM package
+
+- Initialize the package
 
 ```shell
 npm init -y
 ```
 
-## 1 - Installing webpack
+- Open `package.json`.
+
+- Remove every property except `name`, `version`, `scripts`, `dependencies`, `devDependencies` and order them accordingly.
+
+- Insert the `private` property with value `true` after the `version` property.
+
+## 1 - Webpack
+
+- Install the webpack packages
 
 ```shell
 npm i webpack webpack-cli -D
 ```
 
-- Install some library from npm that you want to use.
+- Install a package that you want to use in your project.
 
 ```shell
 npm i date-fns
 ```
 
-- Add the build script to `package.json`
+- Copy the contents of the `extra/01-install-webpack` directory to the root directory of this workshop.
+- Add the `build` script to `package.json`
 
 ```
 "build": "webpack"
 ```
+
+- Run the `build` script and examine the output in the `dist` directory.
 
 ## 2 - Basic webpack configuration
 
@@ -46,12 +59,12 @@ npm i -D html-webpack-plugin
 
 - Add the plugin to the webpack plugins section
 
-```js
+```
 new HtmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body',
   template: 'src/index.html',
-});
+}),
 ```
 
 - Remove the script tag from the html file and move the file to the `src` directory.
@@ -64,16 +77,18 @@ new HtmlWebpackPlugin({
 
 ## 4 - dev and production builds ft. Webpack Dev Server
 
-- Add webpack dev server
+- Install webpack dev server
 
 ```shell
 npm i -D webpack-dev-server
 ```
 
+- Add it to the webpack config
+
 ```
-  devServer: {
-    port: 3000,
-  },
+devServer: {
+  port: 3000,
+},
 ```
 
 - Add the start script
@@ -91,8 +106,8 @@ npm i -D cross-env
 - Change the scripts to include the env variable.
 
 ```
-    "start": "cross-env NODE_ENV=development webpack serve",
-    "build": "cross-env NODE_ENV=production webpack"
+"start": "cross-env NODE_ENV=development webpack serve",
+"build": "cross-env NODE_ENV=production webpack"
 ```
 
 - Add the mode config
@@ -119,17 +134,19 @@ const styleLoader = {
 
 ```
 
-- Add the plugin to the production configuration
+and replace the `style-loader` with it
+
+- Add the plugin only to the production configuration
 
 ```
 ...(process.env.NODE_ENV === 'production'
-        ? [
-          new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
-            chunkFilename: '[id].[contenthash].css',
-          }),
-        ]
-        : []),
+  ? [
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css',
+        chunkFilename: '[id].[contenthash].css',
+      }),
+    ]
+  : []),
 ```
 
 - Install clean-webpack-plugin
@@ -195,9 +212,7 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
 ```
   {
     test: /\.js$/,
-    use: [
-      { loader: 'babel-loader' }
-    ],
+    use: [{ loader: 'babel-loader' }],
     exclude: /node_modules/,
   },
 ```
@@ -216,19 +231,19 @@ devtool: 'source-map',
 npm i -D babel-plugin-module-resolver
 ```
 
-- Add the config to the babel config
+- Add the plugin to the babel config
 
 ```
 [
-  "module-resolver",
+  'module-resolver',
   {
-    "root": ["./src"],
-    "alias": {
-      "^~(.*)": "./src/\\1",
-      "^src/(.*)": "./src/\\1"
-    }
-  }
-]
+    root: ['./src'],
+    alias: {
+      '^~(.*)': './src/\\1',
+      '^src/(.*)': './src/\\1',
+    },
+  },
+],
 ```
 
 ## 8 - TypeScript
@@ -239,7 +254,9 @@ npm i -D babel-plugin-module-resolver
 npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin
 ```
 
-- Add the tsconfig.json file
+- Delete `main.js` and `helpers.js` from the `src` directory
+
+- Add the files from the `extra` directory
 
 - Change the webpack entry field
 
@@ -250,9 +267,9 @@ entry: './src/main.ts',
 - Add the webpack resolve configuration
 
 ```
-  resolve: {
-    extensions: ['.js', '.ts' ],
-  },
+resolve: {
+  extensions: ['.js', '.ts' ],
+},
 ```
 
 - Add the configuration to the webpack loader
@@ -261,10 +278,10 @@ entry: './src/main.ts',
 test: /\.[jt]s$/,
 ```
 
-- Add the babel configuration
+- Add the typescript babel preset
 
 ```
-"@babel/preset-typescript"
+'@babel/preset-typescript',
 ```
 
 - Add the typescript plugin to webpack
@@ -291,7 +308,7 @@ npm i -D @pmmmwh/react-refresh-webpack-plugin react-refresh
 - Add the babel preset
 
 ```
-["@babel/preset-react", { "runtime": "automatic" }],
+['@babel/preset-react', { runtime: 'automatic' }],
 ```
 
 - Add the `react-refresh` babel plugin
@@ -321,6 +338,7 @@ hot: true,
 ```
 
 - Change webpack config
+
   - change the entry setting
     ```
       entry: './src/main.tsx',
@@ -334,6 +352,10 @@ hot: true,
       extensions: ['.js', '.ts', '.jsx', '.tsx' ],
     ```
 
+- Delete `main.ts` from the `src` directory
+
+- Add the files from the `extra` directory
+
 ## 10 - Jest & Testing Library
 
 - Install packages
@@ -345,7 +367,7 @@ npm i -D jest jest-environment-jsdom
 npm i -D whatwg-fetch msw
 ```
 
-- Add the config files
+- Add the files from the `extra` directory
 
 - Add the npm script
 
@@ -373,7 +395,7 @@ coverage/
 npm i -D prettier
 ```
 
-- Add the config files
+- Add the files from the `extra` directory
 
 - Add the npm script
 
@@ -392,10 +414,10 @@ npm run fmt
   - https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
 ```
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "prettier.useEditorConfig": true,
-  "prettier.configPath": ".prettierrc"
+"editor.defaultFormatter": "esbenp.prettier-vscode",
+"editor.formatOnSave": true,
+"prettier.useEditorConfig": true,
+"prettier.configPath": ".prettierrc"
 ```
 
 ## 12 - ESLint
@@ -408,6 +430,7 @@ npm i -D eslint-config-airbnb
 npm i -D eslint-plugin-import
 npm i -D eslint-plugin-react
 npm i -D eslint-plugin-react-hooks
+npm i -D eslint-plugin-react-refresh
 npm i -D eslint-plugin-jsx-a11y
 npm i -D eslint-config-airbnb-typescript
 npm i -D @typescript-eslint/eslint-plugin
@@ -420,7 +443,7 @@ npm i -D eslint-plugin-jest
 npm i -D eslint-plugin-testing-library
 ```
 
-- Add the eslint config
+- Add the files from the `extra` directory
 
 - Add the npm scripts
 
@@ -451,10 +474,10 @@ new ESLintPlugin({
   - https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
 ```
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "eslint.validate": ["typescript", "typescriptreact"]
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true
+},
+"eslint.validate": ["typescript", "typescriptreact"]
 ```
 
 ## 13 - SCSS (OPTIONAL)
@@ -490,6 +513,8 @@ npm i -D sass sass-loader resolve-url-loader
 },
 ```
 
+- Add the files from the `extra` directory
+
 ## 14 - Tailwind (OPTIONAL)
 
 - install the packages
@@ -498,9 +523,9 @@ npm i -D sass sass-loader resolve-url-loader
 npm i -D tailwindcss postcss postcss-loader cssnano
 ```
 
-- copy the tailwind, postcss configs
+- Add the files from the `extra` directory
 
-- add the js config files to the eslint ignore list
+- add the names for the config files to `.eslintignore`
 
 ```
 postcss.config.js
@@ -521,6 +546,8 @@ tailwind.config.js
 @tailwind utilities;
 ```
 
+- Use some tailwind utility in your source file. Example: `text-center`.
+
 ## 15 - MUI (OPTIONAL)
 
 ```shell
@@ -540,4 +567,12 @@ import '@fontsource/roboto/700.css';
 
 ```jsx
 <CssBaseline />
+```
+
+- Use some MUI component in your source file. Example:
+
+```
+<div>
+  <Button variant="contained">MUI button</Button>
+</div>
 ```

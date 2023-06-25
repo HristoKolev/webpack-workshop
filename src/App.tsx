@@ -25,7 +25,7 @@ export const App = (): JSX.Element => {
         <img src={logoUrl} alt="logo" />
       </div>
       <div>
-        <Button variant="contained">Cats</Button>
+        <Button variant="contained">MUI button</Button>
       </div>
     </div>
   );
