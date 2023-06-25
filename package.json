@@ -7,9 +7,9 @@
     "start": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack",
     "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json",
-    "fmt": "prettier --write .",
+    "format": "prettier --write .",
     "lint": "eslint ./ --max-warnings 0",
-    "lint-fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

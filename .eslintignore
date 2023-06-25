@@ -6,6 +6,6 @@ jest.config.js
 setupTests.js
 webpack.config.js
 .babelrc.js
+/extra/
 postcss.config.js
 tailwind.config.js
-/extra/

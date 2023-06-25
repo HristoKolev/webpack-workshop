@@ -16,8 +16,8 @@ const styleLoader = {
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './src/main.tsx',
   devtool: 'source-map',
+  entry: './src/main.tsx',
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
@@ -30,6 +30,7 @@ module.exports = {
   },
   devServer: {
     port: 3000,
+    open: true,
     hot: true,
   },
   module: {
