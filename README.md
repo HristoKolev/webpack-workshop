@@ -471,7 +471,7 @@ npm run profile
 npm i -D @testing-library/dom @testing-library/react
 npm i -D @testing-library/user-event @testing-library/jest-dom
 npm i -D jest jest-environment-jsdom
-npm i -D whatwg-fetch msw
+npm i -D msw
 ```
 
 - Copy the contents of the `extra/10-rtl` directory to the root directory of this workshop.

@@ -1,4 +1,9 @@
 module.exports = {
+  globals: {
+    fetch: global.fetch,
+    Request: global.Request,
+    Response: global.Response,
+  },
   errorOnDeprecated: true,
   maxWorkers: '100%',
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
