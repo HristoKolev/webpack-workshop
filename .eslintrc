@@ -2,8 +2,7 @@
   "root": true,
   "env": {
     "es6": true,
-    "browser": true,
-    "jest": true
+    "browser": true
   },
   "extends": [
     "eslint:recommended",
@@ -36,6 +35,7 @@
   "reportUnusedDisableDirectives": true,
   "ignorePatterns": ["package-lock.json", "/dist/", "/coverage/", "/extra/"],
   "rules": {
+    "object-curly-newline": "off",
     "indent": "off",
     "implicit-arrow-linebreak": "off",
     "function-paren-newline": "off",
@@ -96,6 +96,7 @@
   },
   "overrides": [
     {
+      // All TypeScript files
       "files": ["**/*.+(ts|tsx)"],
       "plugins": ["@typescript-eslint", "deprecation"],
       "parser": "@typescript-eslint/parser",
@@ -145,6 +146,7 @@
       }
     },
     {
+      // Test files and test related infrastructure
       "files": ["**/+(*.)+(spec|test).+(ts|js)?(x)", "src/testing/**"],
       "plugins": ["jest"],
       "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
@@ -154,7 +156,8 @@
       }
     },
     {
-      "files": ["*.js"],
+      // Root level .js/.ts configuration files
+      "files": ["./*.js", "./*.ts"],
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
