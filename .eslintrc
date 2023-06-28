@@ -2,30 +2,25 @@
   "root": true,
   "env": {
     "es6": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "airbnb",
     "airbnb/hooks",
-    "airbnb-typescript",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:eslint-comments/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "prettier"
+    "plugin:import/warnings"
   ],
+  "plugins": ["react-refresh", "react", "eslint-comments", "prettier"],
   "parserOptions": {
-    "parser": "@typescript-eslint/parser",
     "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "project": ["tsconfig.json"]
+    }
   },
   "settings": {
     "import/internal-regex": "^~",
@@ -34,41 +29,39 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     },
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
-    },
     "react": {
       "version": "detect"
     }
   },
-  "plugins": [
-    "react-refresh",
-    "react",
-    "@typescript-eslint",
-    "eslint-comments",
-    "prettier",
-    "deprecation"
-  ],
+  "reportUnusedDisableDirectives": true,
+  "ignorePatterns": ["package-lock.json", "/dist/", "/coverage/", "/extra/"],
   "rules": {
-    "deprecation/deprecation": "error",
-    "linebreak-style": ["error", "unix"],
-    "react-refresh/only-export-components": "warn",
-    "no-console": "error",
-    "import/no-unresolved": "off",
-    "react/react-in-jsx-scope": "off",
-    "import/prefer-default-export": "off",
-    "react/function-component-definition": "off",
+    "indent": "off",
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
     "no-void": "off",
+    "linebreak-style": ["error", "unix"],
+    "no-console": "error",
     "prettier/prettier": "error",
-    "import/extensions": "off",
-    "@typescript-eslint/no-unused-vars": [
+    "no-restricted-syntax": [
       "error",
       {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_",
-        "caughtErrorsIgnorePattern": "^_"
+        "selector": "ForInStatement",
+        "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+      },
+      {
+        "selector": "LabeledStatement",
+        "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+      },
+      {
+        "selector": "WithStatement",
+        "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
       }
     ],
+    "no-param-reassign": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
     "import/order": [
       "error",
       {
@@ -91,38 +84,11 @@
         "pathGroupsExcludedImportTypes": ["builtin", "external"]
       }
     ],
-    "no-restricted-syntax": [
-      "error",
-      {
-        "selector": "ForInStatement",
-        "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
-      },
-      {
-        "selector": "LabeledStatement",
-        "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
-      },
-      {
-        "selector": "WithStatement",
-        "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
-      }
-    ],
     "react/require-default-props": "off",
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      {
-        "checksVoidReturn": false
-      }
-    ],
     "react/jsx-props-no-spreading": "off",
-    "no-param-reassign": "off",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "variable",
-        "format": ["camelCase", "PascalCase", "UPPER_CASE"],
-        "leadingUnderscore": "allow"
-      }
-    ],
+    "react-refresh/only-export-components": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/no-noninteractive-element-to-interactive-role": "off",
@@ -130,7 +96,56 @@
   },
   "overrides": [
     {
-      "files": ["**/+(*.)+(spec|test).+(ts|js)?(x)"],
+      "files": ["**/*.+(ts|tsx)"],
+      "plugins": ["@typescript-eslint", "deprecation"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true
+        },
+        "project": ["tsconfig.json"]
+      },
+      "settings": {
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts", ".tsx"]
+        }
+      },
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "airbnb-typescript",
+        "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "deprecation/deprecation": "error",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variable",
+            "format": ["camelCase", "PascalCase", "UPPER_CASE"],
+            "leadingUnderscore": "allow"
+          }
+        ],
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            "checksVoidReturn": false
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/+(*.)+(spec|test).+(ts|js)?(x)", "src/testing/**"],
       "plugins": ["jest"],
       "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
       "rules": {
@@ -139,7 +154,7 @@
       }
     },
     {
-      "files": ["src/testing/**"],
+      "files": ["*.js"],
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
@@ -151,6 +166,5 @@
         ]
       }
     }
-  ],
-  "reportUnusedDisableDirectives": true
+  ]
 }

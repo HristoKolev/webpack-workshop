@@ -1,4 +1,5 @@
 const path = require('path');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -6,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const sass = require('sass');
 
 const styleLoader = {
   loader:
@@ -55,7 +57,7 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              implementation: require('sass'),
+              implementation: sass,
             },
           },
         ],

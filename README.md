@@ -355,7 +355,7 @@ resolve: {
 test: /\.[jt]s$/,
 ```
 
-- Add the typescript babel preset in `.babelrc.js`
+- Add the typescript babel preset in `babel.config.js`
 
 ```
 '@babel/preset-typescript',
@@ -394,13 +394,13 @@ npm i -D @types/react @types/react-dom @babel/preset-react
 npm i -D @pmmmwh/react-refresh-webpack-plugin react-refresh
 ```
 
-- Add the babel preset in `.babelrc.js`
+- Add the babel preset in `babel.config.js`
 
 ```
 ['@babel/preset-react', { runtime: 'automatic' }],
 ```
 
-- Add the `react-refresh` babel plugin in `.babelrc.js`
+- Add the `react-refresh` babel plugin in `babel.config.js`
 
 ```
 ...(process.env.NODE_ENV === 'development' ? ['react-refresh/babel'] : []),
@@ -621,6 +621,10 @@ npm i -D sass sass-loader resolve-url-loader
 - Add the scss loader configuration to `webpack.config.js`
 
 ```
+const sass = require('sass');
+```
+
+```
 {
   test: /\.scss$/,
   use: [
@@ -636,7 +640,7 @@ npm i -D sass sass-loader resolve-url-loader
       loader: 'sass-loader',
       options: {
         sourceMap: true,
-        implementation: require('sass'),
+        implementation: sass,
       },
     },
   ],
@@ -660,13 +664,6 @@ npm i -D tailwindcss postcss postcss-loader cssnano
 ```
 
 - Copy the contents of the `extra/14-tailwind` directory to the root directory of this workshop.
-
-- Add the names for the config files to `.eslintignore`
-
-```
-postcss.config.js
-tailwind.config.js
-```
 
 - Add the postcss loader after the `css-loader` in `webpack.config.js`.
 
