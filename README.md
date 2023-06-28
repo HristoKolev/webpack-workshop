@@ -551,7 +551,6 @@ npm i -D @typescript-eslint/eslint-plugin
 npm i -D @typescript-eslint/parser
 npm i -D eslint-plugin-eslint-comments
 npm i -D eslint-import-resolver-alias
-npm i -D eslint-config-prettier
 npm i -D eslint-plugin-prettier
 npm i -D eslint-plugin-jest
 npm i -D eslint-plugin-testing-library
