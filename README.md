@@ -510,10 +510,11 @@ npm i -D prettier
 
 - Copy the contents of the `extra/11-prettier` directory to the root directory of this workshop.
 
-- Add the `format` npm script to `package.json`
+- Add the `format` and `format-check` npm scripts to `package.json`
 
 ```
 "format": "prettier --write .",
+"format-check": "prettier --check .",
 ```
 
 - Run the `format` npm script
@@ -540,18 +541,20 @@ npm run format
 ```shell
 npm i -D eslint
 npm i -D eslint-config-airbnb
+npm i -D eslint-config-prettier
 npm i -D eslint-plugin-deprecation
+npm i -D eslint-import-resolver-typescript
 npm i -D eslint-plugin-import
 npm i -D eslint-plugin-react
 npm i -D eslint-plugin-react-hooks
 npm i -D eslint-plugin-react-refresh
+npm i -D eslint-plugin-new-with-error
+npm i -D eslint-plugin-unused-imports
 npm i -D eslint-plugin-jsx-a11y
-npm i -D eslint-config-airbnb-typescript
 npm i -D @typescript-eslint/eslint-plugin
 npm i -D @typescript-eslint/parser
 npm i -D eslint-plugin-eslint-comments
 npm i -D eslint-import-resolver-alias
-npm i -D eslint-plugin-prettier
 npm i -D eslint-plugin-jest
 npm i -D eslint-plugin-testing-library
 ```
