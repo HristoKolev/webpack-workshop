@@ -33,13 +33,13 @@ npm i date-fns
 - Reorder the properties in `package.json` in order to put `dependencies` above `devDependencies`.
 
 - Copy the contents of the `extra/01-install-webpack` directory to the root directory of this workshop.
-- Add the `build` script to `package.json`
+- Add the `build` npm script to `package.json`
 
 ```
 "build": "webpack"
 ```
 
-- Run the `build` script and examine the output in the `dist` directory.
+- Run the `build` npm script and examine the output in the `dist` directory.
 
 ```shell
 npm run build
@@ -59,7 +59,7 @@ npm i -D style-loader css-loader
 
 - Copy the contents of the `extra/02-webpack-config` directory to the root directory of this workshop.
 
-- Run the `build` script and examine the output in the `dist` directory.
+- Run the `build` npm script and examine the output in the `dist` directory.
 
 ```
 npm run build
@@ -95,7 +95,7 @@ new HtmlWebpackPlugin({
 filename: '[name].[contenthash].js',
 ```
 
-- Run the `build` script and examine the output in the `dist` directory.
+- Run the `build` npm script and examine the output in the `dist` directory.
 
 ```
 npm run build
@@ -120,7 +120,7 @@ devServer: {
 },
 ```
 
-- Add the `start` script to `package.json`.
+- Add the `start` npm script to `package.json`.
 
 ```
 "start": "webpack serve",
@@ -224,19 +224,19 @@ new CopyWebpackPlugin({
 <link rel="icon" href="/favicon.ico" />
 ```
 
-- Run the `build` script and examine the output in the `dist` directory.
+- Run the `build` npm script and examine the output in the `dist` directory.
 
 ```shell
 npm run build
 ```
 
-- Run the `start` script to start the application in development mode.
+- Run the `start` npm script to start the application in development mode.
 
 ```shell
 npm run start
 ```
 
-- Don't forget to stop the script before you proceed with the workshop.
+- Don't forget to stop the npm script before you proceed with the workshop.
 
 ## 5 - webpack-bundle-analyzer
 
@@ -246,19 +246,19 @@ npm run start
 npm i -D webpack-bundle-analyzer
 ```
 
-- Add the `profile` script to `package.json`
+- Add the `profile` npm script to `package.json`
 
 ```
 "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
 ```
 
-- Run the `profile` script and examine the visualization.
+- Run the `profile` npm script and examine the visualization.
 
 ```shell
 npm run profile
 ```
 
-- Don't forget to stop the script before you proceed with the workshop.
+- Don't forget to stop the npm script before you proceed with the workshop.
 
 ## 6 - Babel
 
@@ -286,7 +286,7 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
 devtool: 'source-map',
 ```
 
-- Run the `build` script and examine the output in the `dist` directory.
+- Run the `build` npm script and examine the output in the `dist` directory.
 
 ```shell
 npm run build
@@ -317,7 +317,7 @@ npm i -D babel-plugin-module-resolver
 
 - Copy the contents of the `extra/07-transform-imports` directory to the root directory of this workshop.
 
-- Run the `build` script to verify that everything works.
+- Run the `build` npm script to verify that everything works.
 
 ```shell
 npm run build
@@ -449,19 +449,19 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 - Copy the contents of the `extra/09-react` directory to the root directory of this workshop.
 
-- Run the `build` script and examine the output in the `dist` directory.
+- Run the `build` npm script and examine the output in the `dist` directory.
 
 ```shell
 npm run build
 ```
 
-- Run the `profile` script and examine the visualization.
+- Run the `profile` npm script and examine the visualization.
 
 ```shell
 npm run profile
 ```
 
-- Don't forget to stop the script before you proceed with the workshop.
+- Don't forget to stop the npm script before you proceed with the workshop.
 
 ## 10 - Jest & Testing Library
 
@@ -476,7 +476,7 @@ npm i -D msw
 
 - Copy the contents of the `extra/10-rtl` directory to the root directory of this workshop.
 
-- Change the `test` script in `package.json`
+- Change the `test` npm script in `package.json`
 
 ```
 "test": "cross-env NODE_ENV=test jest",
@@ -494,7 +494,7 @@ coverage/
 "include": ["src", "__mocks__"]
 ```
 
-- Run the `test` script to verify that the tests pass.
+- Run the `test` npm script to verify that the tests pass.
 
 ```shell
 npm run test
@@ -510,13 +510,13 @@ npm i -D prettier
 
 - Copy the contents of the `extra/11-prettier` directory to the root directory of this workshop.
 
-- Add the `format` script to `package.json`
+- Add the `format` npm script to `package.json`
 
 ```
 "format": "prettier --write .",
 ```
 
-- Run the `format` script
+- Run the `format` npm script
 
 ```shell
 npm run format
@@ -558,14 +558,14 @@ npm i -D eslint-plugin-testing-library
 
 - Copy the contents of the `extra/12-eslint` directory to the root directory of this workshop.
 
-- Add the `lint` and `lint:fix` scripts to `package.json`
+- Add the `lint` and `lint:fix` npm scripts to `package.json`
 
 ```
 "lint": "eslint ./ --max-warnings 0",
 "lint:fix": "npm run lint -- --fix"
 ```
 
-- Run the `lint:fix` script
+- Run the `lint:fix` npm script
 
 ```shell
 npm run lint:fix
@@ -590,7 +590,7 @@ new ESLintPlugin({
 }),
 ```
 
-- Run the `build` script to verify that everything works.
+- Run the `build` npm script to verify that everything works.
 
 ```shell
 npm run build
@@ -648,7 +648,7 @@ const sass = require('sass');
 
 - Copy the contents of the `extra/13-scss` directory to the root directory of this workshop.
 
-- Run the `build` script to verify that everything works.
+- Run the `build` npm script to verify that everything works.
 
 ```shell
 npm run build
@@ -680,7 +680,7 @@ npm i -D tailwindcss postcss postcss-loader cssnano
 
 - Use some tailwind utility in your source file. Example: `text-center`.
 
-- Run the `build` script to verify that everything works.
+- Run the `build` npm script to verify that everything works.
 
 ```shell
 npm run build
@@ -717,13 +717,13 @@ import '@fontsource/roboto/700.css';
 </div>
 ```
 
-- Run the `build` script to verify that everything works.
+- Run the `build` npm script to verify that everything works.
 
 ```shell
 npm run build
 ```
 
-- Run the `profile` script and examine the visualization.
+- Run the `profile` npm script and examine the visualization.
 - 
 ```shell
 npm run profile
