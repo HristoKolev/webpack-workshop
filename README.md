@@ -315,7 +315,12 @@ npm i -D babel-plugin-module-resolver
 ],
 ```
 
-- Copy the contents of the `extra/07-transform-imports` directory to the root directory of this workshop.
+- In `src/main.js`, change the imports of `helpers.js` and `logo.png` to:
+
+```
+import { formatDate } from 'src/helpers';
+import logoUrl from '~logo.png';
+```
 
 - Run the `build` npm script to verify that everything works.
 
@@ -331,9 +336,11 @@ npm run build
 npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
 ```
 
-- Delete `main.js` and `helpers.js` from the `src` directory
-
 - Copy the contents of the `extra/08-typescript` directory to the root directory of this workshop.
+
+- Rename `src/main.js` to `src/main.ts`.
+- Rename `src/helpers.js` to `src/helpers.ts`
+- In `src/helpers.ts`, add a type to the first parameter of the `formatDate` function
 
 - Change the name of the entry in `webpack.config.js`
 
@@ -650,6 +657,12 @@ const sass = require('sass');
 ```
 
 - Copy the contents of the `extra/13-scss` directory to the root directory of this workshop.
+
+- Import the `scss` file in `src/main.tsx`.
+
+```js
+import './styles.scss';
+```
 
 - Run the `build` npm script to verify that everything works.
 
