@@ -294,7 +294,7 @@ npm run build
 
 ## 7 - transforming imports
 
-- Add the package
+- Install the package
 
 ```shell
 npm i -D babel-plugin-module-resolver
@@ -330,7 +330,7 @@ npm run build
 
 ## 8 - TypeScript
 
-- Install packages
+- Install the packages
 
 ```shell
 npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
@@ -393,7 +393,7 @@ npm run build
 
 ## 9 - React
 
-- Install packages
+- Install the packages
 
 ```shell
 npm i react react-dom
@@ -454,6 +454,12 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 - Delete `main.ts` from the `src` directory
 
+- Add the `#root` div element to the `body` tag in `src/index.html`
+
+```html
+<div id="root"></div>
+```
+
 - Copy the contents of the `extra/09-react` directory to the root directory of this workshop.
 
 - Run the `build` npm script and examine the output in the `dist` directory.
@@ -472,7 +478,7 @@ npm run profile
 
 ## 10 - Jest & Testing Library
 
-- Install packages
+- Install the packages
 
 ```shell
 npm i -D @testing-library/dom @testing-library/react
@@ -483,7 +489,7 @@ npm i -D msw
 
 - Copy the contents of the `extra/10-rtl` directory to the root directory of this workshop.
 
-- Change the `test` npm script in `package.json`
+- Replace the `test` npm script in `package.json`
 
 ```
 "test": "cross-env NODE_ENV=test jest",
@@ -740,7 +746,6 @@ npm run build
 ```
 
 - Run the `profile` npm script and examine the visualization.
--
 
 ```shell
 npm run profile

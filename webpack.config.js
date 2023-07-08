@@ -18,22 +18,22 @@ const styleLoader = {
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  devtool: 'source-map',
   entry: './src/main.tsx',
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
   },
-  stats: {
-    errorDetails: true,
-  },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
   },
+  devtool: 'source-map',
   devServer: {
     port: 3000,
     open: true,
     hot: true,
+  },
+  stats: {
+    errorDetails: true,
   },
   module: {
     rules: [
