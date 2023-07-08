@@ -296,11 +296,11 @@
     {
       // Test files and test related infrastructure
       "files": ["**/+(*.)+(spec|test).+(ts|js)?(x)", "./src/testing/**"],
-      "plugins": ["vitest"],
-      "extends": ["plugin:vitest/recommended", "plugin:testing-library/react"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
       "rules": {
         "testing-library/no-wait-for-multiple-assertions": "off",
-        "vitest/expect-expect": "off",
+        "jest/expect-expect": "off",
         "import/no-extraneous-dependencies": [
           "error",
           {
