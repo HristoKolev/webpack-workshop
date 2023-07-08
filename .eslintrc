@@ -294,6 +294,13 @@
       }
     },
     {
+      // Type deffinition files.
+      "files": ["./**/*.d.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
       // Test files and test related infrastructure
       "files": ["**/+(*.)+(spec|test).+(ts|js)?(x)", "./src/testing/**"],
       "plugins": ["jest"],
@@ -314,12 +321,14 @@
     },
     {
       // Root level .js/.ts configuration files
-      "files": ["./*.js", "./*.ts"],
+      "files": ["./*.js", "./*.ts", "./__mocks__/**/*.[j|t]s?(x)"],
       "env": {
         "node": true
       },
       "rules": {
         "import/no-default-export": "off",
+        "import/no-commonjs": "off",
+        "import/no-nodejs-modules": "off",
         "import/no-extraneous-dependencies": [
           "error",
           {

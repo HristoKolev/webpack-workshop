@@ -1,5 +1,5 @@
-import { useEffect, useState, JSX } from 'react';
 import { Button, CssBaseline } from '@mui/material';
+import { type JSX, useEffect, useState } from 'react';
 
 import { formatDate } from '~helpers';
 import logoUrl from '~logo.png';

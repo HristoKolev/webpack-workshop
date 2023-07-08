@@ -18,6 +18,6 @@ const App = (): JSX.Element => {
   );
 };
 
-const rootElement = document.getElementById('root') as Element;
+const rootElement = document.getElementById('root')!;
 
 createRoot(rootElement).render(<App />);

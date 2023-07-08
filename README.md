@@ -727,7 +727,8 @@ npm run build
 ```
 
 - Run the `profile` npm script and examine the visualization.
-- 
+-
+
 ```shell
 npm run profile
 ```
