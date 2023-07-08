@@ -328,7 +328,7 @@ npm run build
 - Install packages
 
 ```shell
-npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin
+npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
 ```
 
 - Delete `main.js` and `helpers.js` from the `src` directory

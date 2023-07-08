@@ -16,11 +16,11 @@
     "pretty": true,
     "noImplicitAny": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "skipLibCheck": true,
     "paths": {
       "~*": ["src/*"],
       "src/*": ["src/*"]
     }
   },
-  "exclude": ["**/node_modules", "**/.*/"],
   "include": ["src", "__mocks__"]
 }
