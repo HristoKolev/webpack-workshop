@@ -21,7 +21,7 @@ npm init -y
 - Install the webpack packages
 
 ```shell
-npm i webpack webpack-cli -D
+npm i -D webpack webpack-cli
 ```
 
 - Install a package that you want to use in your project.
@@ -73,7 +73,7 @@ npm run build
 npm i -D html-webpack-plugin
 ```
 
-- Add the plugin to the webpack plugins section
+- Add the plugin to the webpack plugins section in `webpack.config.js`
 
 ```
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -437,6 +437,10 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 "jsx": "react-jsx",
 ```
 
+- Delete `main.ts` from the `src` directory
+
+- Copy the contents of the `extra/09-react` directory to the root directory of this workshop.
+
 - Change the configuration in `webpack.config.js`
 
   - change the entry setting
@@ -452,15 +456,11 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
       extensions: ['.js', '.ts', '.jsx', '.tsx'],
     ```
 
-- Delete `main.ts` from the `src` directory
-
 - Add the `#root` div element to the `body` tag in `src/index.html`
 
 ```html
 <div id="root"></div>
 ```
-
-- Copy the contents of the `extra/09-react` directory to the root directory of this workshop.
 
 - Run the `build` npm script and examine the output in the `dist` directory.
 
@@ -498,7 +498,7 @@ npm i -D msw
 - Add the code coverage output directory to `.gitignore`
 
 ```
-coverage/
+/coverage/
 ```
 
 - Add the `__mocks__` directory to the `include` field in `tsconfig.json`
