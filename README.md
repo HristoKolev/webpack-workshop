@@ -117,6 +117,7 @@ npm i -D webpack-dev-server
 devServer: {
   port: 3000,
   open: true,
+  hot: true,
 },
 ```
 
@@ -280,12 +281,6 @@ npm i -D babel-loader @babel/core @babel/preset-env core-js
 },
 ```
 
-- Enable source maps in `webpack.config.js`
-
-```
-devtool: 'source-map',
-```
-
 - Run the `build` npm script and examine the output in the `dist` directory.
 
 ```shell
@@ -411,12 +406,6 @@ npm i -D @pmmmwh/react-refresh-webpack-plugin react-refresh
 
 ```
 ...(process.env.NODE_ENV === 'development' ? ['react-refresh/babel'] : []),
-```
-
-- Enable full hot reloading for Webpack's DevServer in `webpack.config.js` by adding this field to the `devServer` configuration
-
-```
-hot: true,
 ```
 
 - Add the `@pmmmwh/react-refresh-webpack-plugin` plugin in `webpack.config.js`

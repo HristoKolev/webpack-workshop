@@ -9,6 +9,7 @@ module.exports = {
   stats: {
     errorDetails: true,
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
