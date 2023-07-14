@@ -515,8 +515,8 @@ npm i -D prettier
 - Add the `format` and `format-check` npm scripts to `package.json`
 
 ```
-"format": "prettier --write .",
-"format-check": "prettier --check .",
+"format": "prettier --cache --write .",
+"format-check": "prettier --cache --check .",
 ```
 
 - Run the `format` npm script
@@ -566,7 +566,7 @@ npm i -D eslint-plugin-testing-library
 - Add the `lint` and `lint:fix` npm scripts to `package.json`
 
 ```
-"lint": "eslint ./ --max-warnings 0",
+"lint": "eslint ./ --cache --cache-location ./node_modules/.cache/eslint/ --max-warnings 0",
 "lint:fix": "npm run lint -- --fix"
 ```
 

@@ -7,9 +7,9 @@
     "start": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack",
     "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json",
-    "format": "prettier --write .",
-    "format-check": "prettier --check .",
-    "lint": "eslint ./ --max-warnings 0",
+    "format": "prettier --cache --write .",
+    "format-check": "prettier --cache --check .",
+    "lint": "eslint ./ --cache --cache-location ./node_modules/.cache/eslint/ --max-warnings 0",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
