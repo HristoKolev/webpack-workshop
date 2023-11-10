@@ -490,10 +490,10 @@ npm i -D msw
 /coverage/
 ```
 
-- Add the `__mocks__` directory to the `include` field in `tsconfig.json`
+- Add `__mocks__` and `setupTests.ts` to the `include` field in `tsconfig.json`
 
 ```
-"include": ["src", "__mocks__"]
+"include": ["src", "__mocks__", "setupTests.ts"]
 ```
 
 - Run the `test` npm script to verify that the tests pass.

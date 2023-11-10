@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { setupServer } from 'msw/node';
-import { rest } from 'msw';
 import { format } from 'date-fns';
+import { HttpResponse, http } from 'msw';
+import { setupServer } from 'msw/node';
 
 import { App } from '~App';
 
 const server = setupServer(
-  rest.get('http://localhost:3001/', (_req, res, ctx) =>
-    res(ctx.text('Hello from the server!'))
+  http.get('http://localhost:3001/', () =>
+    HttpResponse.text('Hello from the server!')
   )
 );
 

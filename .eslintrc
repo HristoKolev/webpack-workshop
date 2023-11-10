@@ -338,13 +338,6 @@
           }
         ]
       }
-    },
-    {
-      // Root level .ts configuration files
-      "files": ["./*.ts"],
-      "parserOptions": {
-        "project": ["tsconfig.node.json"]
-      }
     }
   ]
 }
