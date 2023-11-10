@@ -1,16 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import { App } from '~App';
+import { format } from 'date-fns';
+import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
-import { rest } from 'msw';
+
+import { App } from '~App';
 
 const server = setupServer(
-  rest.get('http://localhost:3001/', (_req, res, ctx) =>
-    res(ctx.text('Hello from the server!'))
+  http.get('http://localhost:3001/', () =>
+    HttpResponse.text('Hello from the server!')
   )
 );
 
 beforeAll(() => {
-  server.listen();
+  server.listen({ onUnhandledRequest: 'error' });
 });
 
 beforeEach(() => {
@@ -24,7 +26,9 @@ afterAll(() => {
 test('App renders data', async () => {
   render(<App />);
   expect(screen.getByText('Hello Webpack')).toBeInTheDocument();
-  expect(screen.getByTestId('date-label')).toHaveTextContent('29 Jan 2023');
+  expect(screen.getByTestId('date-label')).toHaveTextContent(
+    format(new Date(), 'dd MMM yyyy')
+  );
 
   const serverMessage = await screen.findByTestId('server-message');
 

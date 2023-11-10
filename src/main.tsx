@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { App } from '~App';
 import { createReduxStore } from '~redux/createReduxStore';
 
-import './index.css';
+import './main.css';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 

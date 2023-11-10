@@ -2,32 +2,52 @@
 
 TODO: Describe what this is, why it exists and how it should be used.
 
-## 0 - Create project with npm
+## 0 - NPM package
+
+- Initialize the package
 
 ```shell
 npm init -y
-
 ```
 
-## 1 - Install webpack
+- Open `package.json`.
+
+- Remove every property except `name`, `version`, `scripts`.
+
+- Insert the `private` property with value `true` after the `version` property.
+
+## 1 - Webpack
+
+- Install the webpack packages
 
 ```shell
-npm i webpack webpack-cli -D
+npm i -D webpack webpack-cli
 ```
 
-- Install some library from npm that you want to use.
+- Install a package that you want to use in your project.
 
 ```shell
 npm i date-fns
 ```
 
-- Add the build script to `package.json`
+- Reorder the properties in `package.json` in order to put `dependencies` above `devDependencies`.
+
+- Copy the contents of the `extra/01-install-webpack` directory to the root directory of this workshop.
+- Add the `build` npm script to `package.json`
 
 ```
 "build": "webpack"
 ```
 
-## 2 - Add basic webpack configuration
+- Run the `build` npm script and examine the output in the `dist` directory.
+
+```shell
+npm run build
+```
+
+- You need to manually copy the `index.html` file to the `dist` directory.
+
+## 2 - Basic webpack configuration
 
 - Install the css loaders
 
@@ -35,7 +55,17 @@ npm i date-fns
 npm i -D style-loader css-loader
 ```
 
-## 3 - Add html-webpack-plugin
+- Delete the `index.js` file in the `src` directory.
+
+- Copy the contents of the `extra/02-webpack-config` directory to the root directory of this workshop.
+
+- Run the `build` npm script and examine the output in the `dist` directory.
+
+```
+npm run build
+```
+
+## 3 - html-webpack-plugin
 
 - Install the package
 
@@ -43,40 +73,55 @@ npm i -D style-loader css-loader
 npm i -D html-webpack-plugin
 ```
 
-- Add the plugin to the webpack plugins section
+- Add the plugin to the webpack plugins section in `webpack.config.js`
 
-```js
+```
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+```
+
+```
 new HtmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body',
   template: 'src/index.html',
-});
+}),
 ```
 
-- Remove the script tag from the html file and move the file to the `src` directory.
-
-- You can also add hashing to the output file names:
+- Remove the `script` tag from the `index.html` file
+- Move the `index.html` file to the `src` directory
+- Add hashing to the output file names in `webpack.config.js`
 
 ```
-'[name].[contenthash].js'
+filename: '[name].[contenthash].js',
 ```
+
+- Run the `build` npm script and examine the output in the `dist` directory.
+
+```
+npm run build
+```
+
+- Some files may be left over from previous builds - `main.js`.
 
 ## 4 - dev and production builds ft. Webpack Dev Server
 
-- Add webpack dev server
+- Install Webpack's DevServer package
 
 ```shell
 npm i -D webpack-dev-server
 ```
 
+- Add the DevServer config to `webpack.config.js`
+
 ```
-  devServer: {    
-    compress: true,
-    port: 3000,
-  },
+devServer: {
+  port: 3000,
+  open: true,
+  hot: true,
+},
 ```
 
-- Add the start script
+- Add the `start` npm script to `package.json`.
 
 ```
 "start": "webpack serve",
@@ -88,14 +133,14 @@ npm i -D webpack-dev-server
 npm i -D cross-env
 ```
 
-- Change the scripts to include the env variable.
+- Change the npm scripts in `package.json` to include the environment variable
 
 ```
-    "start": "cross-env NODE_ENV=development webpack serve",
-    "build": "cross-env NODE_ENV=production webpack"
+"start": "cross-env NODE_ENV=development webpack serve",
+"build": "cross-env NODE_ENV=production webpack"
 ```
 
-- Add the mode config
+- Change `webpack.config.js` to set webpack's `mode` property.
 
 ```
 mode: process.env.NODE_ENV,
@@ -107,7 +152,11 @@ mode: process.env.NODE_ENV,
 npm i -D mini-css-extract-plugin
 ```
 
-- Add the the loader to the production configuration
+- Open `webpack.config.js` and add the loader to the production configuration
+
+```
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+```
 
 ```
 const styleLoader = {
@@ -119,17 +168,19 @@ const styleLoader = {
 
 ```
 
+replace the `style-loader` with the `styleLoader` variable.
+
 - Add the plugin to the production configuration
 
 ```
 ...(process.env.NODE_ENV === 'production'
-        ? [
-          new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
-            chunkFilename: '[id].[contenthash].css',
-          }),
-        ]
-        : []),
+  ? [
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css',
+        chunkFilename: '[id].[contenthash].css',
+      }),
+    ]
+  : []),
 ```
 
 - Install clean-webpack-plugin
@@ -141,10 +192,14 @@ npm i -D clean-webpack-plugin
 - Add the plugin to the configuration
 
 ```
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+```
+
+```
 new CleanWebpackPlugin(),
 ```
 
-- Add copy-webpack-plugin
+- Install copy-webpack-plugin
 
 ```shell
 npm i -D copy-webpack-plugin
@@ -153,12 +208,36 @@ npm i -D copy-webpack-plugin
 - Add the plugin to the configuration
 
 ```
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+```
+
+```
 new CopyWebpackPlugin({
   patterns: [{ from: 'public' }],
 }),
 ```
 
-- Create a `public` directory.
+- Copy the contents of the `extra/04-dev-and-production-builds` directory to the root directory of this workshop.
+
+- Modify `index.html` and to this line to the `head` tag
+
+```html
+<link rel="icon" href="/favicon.ico" />
+```
+
+- Run the `build` npm script and examine the output in the `dist` directory.
+
+```shell
+npm run build
+```
+
+- Run the `start` npm script to start the application in development mode.
+
+```shell
+npm run start
+```
+
+- Don't forget to stop the npm script before you proceed with the workshop.
 
 ## 5 - webpack-bundle-analyzer
 
@@ -168,13 +247,21 @@ new CopyWebpackPlugin({
 npm i -D webpack-bundle-analyzer
 ```
 
-- Add the script to the package.json
+- Add the `profile` npm script to `package.json`
 
 ```
 "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
 ```
 
-## 6 - Add babel
+- Run the `profile` npm script and examine the visualization.
+
+```shell
+npm run profile
+```
+
+- Don't forget to stop the npm script before you proceed with the workshop.
+
+## 6 - Babel
 
 - Install the packages
 
@@ -182,86 +269,105 @@ npm i -D webpack-bundle-analyzer
 npm i -D babel-loader @babel/core @babel/preset-env core-js
 ```
 
-- Add the config files
+- Copy the contents of the `extra/06-babel` directory to the root directory of this workshop.
 
-- Add the loader to the webpack config
-
-```
-  {
-    test: /\.js$/,
-    use: [
-      { loader: 'babel-loader' }
-    ],
-    exclude: /node_modules/,
-  },
-```
-
-- Add sourcemaps
+- Add the loader to `webpack.config.js`
 
 ```
-devtool: 'source-map',
+{
+  test: /\.js$/,
+  use: [{ loader: 'babel-loader' }],
+  exclude: /node_modules/,
+},
 ```
 
-## 7 - Transforming imports
+- Run the `build` npm script and examine the output in the `dist` directory.
 
-- Add the package
+```shell
+npm run build
+```
+
+## 7 - transforming imports
+
+- Install the package
 
 ```shell
 npm i -D babel-plugin-module-resolver
 ```
 
-- Add the config to the babel config
+- Add the plugin to the babel config
 
 ```
 [
-  "module-resolver",
+  'module-resolver',
   {
-    "root": ["./src"],
-    "alias": {
-      "^~(.*)": "./src/\\1",
-      "^src/(.*)": "./src/\\1"
-    }
-  }
-]
+    root: ['./src'],
+    alias: {
+      '^~(.*)': './src/\\1',
+      '^src/(.*)': './src/\\1',
+    },
+  },
+],
 ```
 
-## 8 - Adding TypeScript
+- In `src/main.js`, change the imports of `helpers.js` and `logo.png` to:
 
-- Install packages
+```
+import { formatDate } from 'src/helpers';
+import logoUrl from '~logo.png';
+```
+
+- Run the `build` npm script to verify that everything works.
 
 ```shell
-npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin
+npm run build
 ```
 
-- Add the tsconfig.json file
+## 8 - TypeScript
 
-- Change the webpack entry field
+- Install the packages
 
-```
-entry: './src/index.ts',
-```
-
-- Add the webpack resolve configuration
-
-```
-  resolve: {
-    extensions: ['.js', '.ts' ],
-  },
+```shell
+npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
 ```
 
-- Add the configuration to the webpack loader
+- Copy the contents of the `extra/08-typescript` directory to the root directory of this workshop.
+
+- Rename `src/main.js` to `src/main.ts`.
+- Rename `src/helpers.js` to `src/helpers.ts`
+- In `src/helpers.ts`, add a type to the first parameter of the `formatDate` function
+
+- Change the name of the entry in `webpack.config.js`
+
+```
+entry: './src/main.ts',
+```
+
+- Change the default resolve configuration in `webpack.config.js`
+
+```
+resolve: {
+  extensions: ['.js', '.ts' ],
+},
+```
+
+- Change the babel loader configuration in `webpack.config.js` to match typescript files as well
 
 ```
 test: /\.[jt]s$/,
 ```
 
-- Add the babel configuration
+- Add the typescript babel preset in `babel.config.js`
 
 ```
-"@babel/preset-typescript"
+'@babel/preset-typescript',
 ```
 
-- Add the typescript plugin to webpack
+- Add the typescript webpack plugin in `webpack.config.js`
+
+```
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+```
 
 ```
 new ForkTsCheckerWebpackPlugin({
@@ -274,71 +380,129 @@ new ForkTsCheckerWebpackPlugin({
 }),
 ```
 
-## 9 - Adding React
+- Run the `build` script to verify that everything works.
+
+```shell
+npm run build
+```
+
+## 9 - React
+
+- Install the packages
 
 ```shell
 npm i react react-dom
 npm i -D @types/react @types/react-dom @babel/preset-react
+npm i -D @pmmmwh/react-refresh-webpack-plugin react-refresh
 ```
 
-- Add the babel preset
+- Add the babel preset in `babel.config.js`
 
 ```
-["@babel/preset-react", { "runtime": "automatic" }],
+['@babel/preset-react', { runtime: 'automatic' }],
 ```
 
-- Add the jsx typescript setting
+- Add the `react-refresh` babel plugin in `babel.config.js`
+
+```
+...(process.env.NODE_ENV === 'development' ? ['react-refresh/babel'] : []),
+```
+
+- Add the `@pmmmwh/react-refresh-webpack-plugin` plugin in `webpack.config.js`
+
+```
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+```
+
+```
+...(process.env.NODE_ENV === 'development'
+  ? [new ReactRefreshWebpackPlugin()]
+  : []),
+```
+
+- Add the `jsx` typescript setting in `tsconfig.json`
 
 ```
 "jsx": "react-jsx",
 ```
 
-- Change webpack config
+- Delete `main.ts` from the `src` directory
+
+- Copy the contents of the `extra/09-react` directory to the root directory of this workshop.
+
+- Change the configuration in `webpack.config.js`
+
   - change the entry setting
     ```
-      entry: './src/index.tsx',
+      entry: './src/main.tsx',
     ```
-  - change the loader matcher
+  - change the babel loader matcher
     ```
       test: /\.[jt]sx?$/,
     ```
   - change the resolve.extensions setting
     ```
-      extensions: ['.js', '.ts', '.jsx', '.tsx' ],
+      extensions: ['.js', '.ts', '.jsx', '.tsx'],
     ```
 
-## 10 - React Testing Library + Jest
+- Add the `#root` div element to the `body` tag in `src/index.html`
 
-- Install packages
+```html
+<div id="root"></div>
+```
+
+- Run the `build` npm script and examine the output in the `dist` directory.
+
+```shell
+npm run build
+```
+
+- Run the `profile` npm script and examine the visualization.
+
+```shell
+npm run profile
+```
+
+- Don't forget to stop the npm script before you proceed with the workshop.
+
+## 10 - Jest & Testing Library
+
+- Install the packages
 
 ```shell
 npm i -D @testing-library/dom @testing-library/react
 npm i -D @testing-library/user-event @testing-library/jest-dom
 npm i -D jest jest-environment-jsdom
-npm i -D node-fetch@2 msw
+npm i -D msw
 ```
 
-- Add the config files
+- Copy the contents of the `extra/10-rtl` directory to the root directory of this workshop.
 
-- Add the npm script
+- Replace the `test` npm script in `package.json`
 
 ```
 "test": "cross-env NODE_ENV=test jest",
 ```
 
-- Add a line to gitignore
+- Add the code coverage output directory to `.gitignore`
 
 ```
-coverage/
+/coverage/
 ```
 
-- Add `__mocks__` to the typescript include field
+- Add `__mocks__` and `setupTests.ts` to the `include` field in `tsconfig.json`
 
 ```
-  "include": ["src", "__mocks__"]
+"include": ["src", "__mocks__", "setupTests.ts"]
 ```
 
-## 11 - prettier
+- Run the `test` npm script to verify that the tests pass.
+
+```shell
+npm run test
+```
+
+## 11 - Prettier
 
 - Install the package
 
@@ -346,47 +510,70 @@ coverage/
 npm i -D prettier
 ```
 
-- Add the config files
+- Copy the contents of the `extra/11-prettier` directory to the root directory of this workshop.
+
+- Add the `format` and `format-check` npm scripts to `package.json`
+
+```
+"format": "prettier --cache --write .",
+"format-check": "prettier --cache --check .",
+```
+
+- Run the `format` npm script
+
+```shell
+npm run format
+```
 
 - Demonstrate WebStorm config
 - Demonstrate VSCode config
   - https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
 ```
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "prettier.useEditorConfig": true,
-  "prettier.configPath": ".prettierrc"
+"editor.defaultFormatter": "esbenp.prettier-vscode",
+"editor.formatOnSave": true,
+"prettier.useEditorConfig": true,
+"prettier.configPath": ".prettierrc"
 ```
 
-## 12 - eslint
+## 12 - ESLint
 
 - Install the packages
 
 ```shell
 npm i -D eslint
 npm i -D eslint-config-airbnb
+npm i -D eslint-config-prettier
+npm i -D eslint-plugin-deprecation
+npm i -D eslint-import-resolver-typescript
 npm i -D eslint-plugin-import
 npm i -D eslint-plugin-react
 npm i -D eslint-plugin-react-hooks
+npm i -D eslint-plugin-react-refresh
+npm i -D eslint-plugin-new-with-error
+npm i -D eslint-plugin-unused-imports
 npm i -D eslint-plugin-jsx-a11y
-npm i -D eslint-config-airbnb-typescript
 npm i -D @typescript-eslint/eslint-plugin
 npm i -D @typescript-eslint/parser
 npm i -D eslint-plugin-eslint-comments
 npm i -D eslint-import-resolver-alias
-npm i -D eslint-config-prettier
-npm i -D eslint-plugin-prettier
 npm i -D eslint-plugin-jest
 npm i -D eslint-plugin-testing-library
 ```
 
-- Add the eslint config
+- Copy the contents of the `extra/12-eslint` directory to the root directory of this workshop.
 
-- Add the npm script
+- Add the `lint` and `lint:fix` npm scripts to `package.json`
 
 ```
-"lint": "eslint ./"
+"lint": "eslint ./ --cache --cache-location ./node_modules/.cache/eslint/ --max-warnings 0",
+"lint:fix": "npm run lint -- --fix"
+```
+
+- Run the `lint:fix` npm script
+
+```shell
+npm run lint:fix
 ```
 
 - Install the webpack plugin
@@ -395,7 +582,11 @@ npm i -D eslint-plugin-testing-library
 npm i -D eslint-webpack-plugin
 ```
 
-- Add the plugin to the webpack configuration
+- Add the plugin to the configuration in `webpack.config.js`
+
+```
+const ESLintPlugin = require('eslint-webpack-plugin');
+```
 
 ```
 new ESLintPlugin({
@@ -404,35 +595,45 @@ new ESLintPlugin({
 }),
 ```
 
+- Run the `build` npm script to verify that everything works.
+
+```shell
+npm run build
+```
+
 - Doesn't work for test files. Why?
 
-- Demonstrate WebStorm config 
+- Demonstrate WebStorm config
 - Demonstrate VSCode config
   - https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
 ```
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "eslint.validate": ["typescript", "typescriptreact"]
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true
+},
+"eslint.validate": ["typescript", "typescriptreact"]
 ```
 
-## 13 - SCSS
+## 13 - SCSS (OPTIONAL)
 
 - Install the packages
- 
+
 ```shell
 npm i -D sass sass-loader resolve-url-loader
 ```
 
-- Add the webpack loader
+- Add the scss loader configuration to `webpack.config.js`
+
+```
+const sass = require('sass');
+```
 
 ```
 {
   test: /\.scss$/,
   use: [
     styleLoader,
-    { loader: 'css-loader' },	  
+    { loader: 'css-loader' },
     {
       loader: 'resolve-url-loader',
       options: {
@@ -443,89 +644,55 @@ npm i -D sass sass-loader resolve-url-loader
       loader: 'sass-loader',
       options: {
         sourceMap: true,
-        implementation: require('sass'),
+        implementation: sass,
       },
     },
   ],
 },
 ```
 
-## 14 - BrowserSync
+- Copy the contents of the `extra/13-scss` directory to the root directory of this workshop.
 
-* Install the packages
+- Import the `scss` file in `src/main.tsx`.
+
+```js
+import './styles.scss';
+```
+
+- Run the `build` npm script to verify that everything works.
 
 ```shell
-npm i -D browser-sync-webpack-plugin connect-history-api-fallback http-proxy-middleware
+npm run build
 ```
 
-* copy the BrowserSync config
+## 14 - Tailwind (OPTIONAL)
 
-* add the browsersync config to the eslint ignore list
-
-```
-browsersync-config.js
-```
-
-* remove the webpack dev server configuration
-
-* add the browsersync webpack plugin
-
-```
-new BrowserSyncPlugin(require('./browsersync-config')),
-```
-
-* change the run script
-
-```
-"start": "cross-env NODE_ENV=development webpack --watch",
-```
-
-## 15 - tailwind
-
-* install the packages
+- Install the packages
 
 ```shell
 npm i -D tailwindcss postcss postcss-loader cssnano
 ```
 
-* copy the tailwind, postcss configs
+- Copy the contents of the `extra/14-tailwind` directory to the root directory of this workshop.
 
-* add the js config files to the eslint ignore list
- 
-```
-postcss.config.js
-tailwind.config.js
-```
-* add the postcss loader after the `css-loader`.
+- Add the postcss loader after the `css-loader` in `webpack.config.js`.
 
 ```
 { loader: 'postcss-loader' },
 ```
 
-* add the tailwind directives on top of your css file
+- Add the tailwind directives at the start of `main.css`
+
 ```
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
 
-## 16 - MUI
+- Use some tailwind utility in your source file. Example: `text-center`.
+
+- Run the `build` npm script to verify that everything works.
 
 ```shell
-npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material
-```
-
-* import the fonts
-
-```
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-```
-
-* add the MUI baseline component
-
-```jsx
-<CssBaseline />
+npm run build
 ```

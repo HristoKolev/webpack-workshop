@@ -1,11 +1,15 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/main.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
+  stats: {
+    errorDetails: true,
+  },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -18,7 +22,5 @@ module.exports = {
       },
     ],
   },
-  stats: {
-    errorDetails: true,
-  },
+  plugins: [],
 };

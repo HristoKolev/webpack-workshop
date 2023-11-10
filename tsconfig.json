@@ -1,34 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "noEmit": true,
     "strict": true,
+    "jsx": "react-jsx",
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "jsx": "react-jsx",
     "baseUrl": "./",
     "rootDir": "./",
     "module": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "pretty": true,
     "noImplicitAny": true,
-    "lib": [
-      "ES2015",
-      "ES2016",
-      "ES2017",
-      "ES2018",
-      "ES2019",
-      "ES2020",
-      "ES2021",
-      "DOM"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "skipLibCheck": true,
     "paths": {
       "~*": ["src/*"],
       "src/*": ["src/*"]
     }
   },
-  "exclude": ["**/node_modules", "**/.*/"],
-  "include": ["src", "__mocks__"]
+  "include": ["src", "__mocks__", "setupTests.ts"]
 }
