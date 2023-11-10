@@ -1,4 +1,3 @@
-import { Button, CssBaseline } from '@mui/material';
 import { type JSX, useEffect, useState } from 'react';
 
 import { formatDate } from '~helpers';
@@ -17,15 +16,11 @@ export const App = (): JSX.Element => {
 
   return (
     <div className="text text-center">
-      <CssBaseline />
       <div>Hello Webpack</div>
       <div data-testid="date-label">{formatDate(new Date())}</div>
       {message && <div data-testid="server-message">{message}</div>}
       <div>
         <img src={logoUrl} alt="logo" />
-      </div>
-      <div>
-        <Button variant="contained">MUI button</Button>
       </div>
     </div>
   );
