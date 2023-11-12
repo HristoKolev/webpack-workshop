@@ -4,7 +4,6 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-import { Pet, PetKind, PetListItem } from '~utils/server-data-model';
 import {
   createPet,
   deletePet,
@@ -14,6 +13,7 @@ import {
   updatePet,
 } from '~utils/api-client';
 import { reportError } from '~utils/reportError';
+import type { Pet, PetKind, PetListItem } from '~utils/server-data-model';
 
 import type { ReduxState } from './createReduxStore';
 

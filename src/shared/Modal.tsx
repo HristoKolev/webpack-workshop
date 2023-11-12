@@ -1,7 +1,7 @@
-import { memo, ReactNode, useCallback } from 'react';
+import { type JSX, type ReactNode, memo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
-import closeModalImage from './close-modal.png';
+import closeModalPng from './close-modal.png';
 
 import './Modal.css';
 
@@ -12,18 +12,29 @@ export interface ModalProps {
 
   ariaLabel?: string;
 
+  disableClosing?: boolean;
+
   onClose?: () => void;
 }
 
 const ModalImpl = memo(
-  ({ children, onClose, className, ariaLabel }: ModalProps): JSX.Element => {
+  ({
+    children,
+    onClose,
+    className,
+    ariaLabel,
+    disableClosing,
+  }: ModalProps): JSX.Element => {
     const handleOnClose = useCallback(() => onClose?.(), [onClose]);
 
     return (
       <div className="modal open">
-        <div
-          className="modal-bg modal-exit"
+        <button
+          type="button"
+          className="modal-backdrop"
           data-testid="modal-backdrop"
+          aria-label="Close modal"
+          disabled={disableClosing}
           onClick={handleOnClose}
         />
         <div
@@ -32,13 +43,16 @@ const ModalImpl = memo(
           aria-label={ariaLabel}
         >
           {children}
-          <img
-            role="button"
-            src={closeModalImage}
-            className="modal-close modal-exit"
-            alt="Close modal"
+          <button
+            type="button"
+            className="modal-close-button"
+            data-testid="modal-close-button"
+            aria-label="Close modal"
+            disabled={disableClosing}
             onClick={handleOnClose}
-          />
+          >
+            <img src={closeModalPng} alt="Close modal" width={30} height={30} />
+          </button>
         </div>
       </div>
     );

@@ -1,5 +1,4 @@
 let petIdState = 42;
-
 // eslint-disable-next-line no-plusplus
 const generateId = () => petIdState++;
 
@@ -34,16 +33,13 @@ export const mockPetList = [
 ];
 
 export const mockPetKinds = [
-  {
-    displayName: 'Cat',
-    value: 1,
-  },
-  {
-    displayName: 'Dog',
-    value: 2,
-  },
-  {
-    displayName: 'Parrot',
-    value: 3,
-  },
+  { displayName: 'Cat', value: 1 },
+  { displayName: 'Dog', value: 2 },
+  { displayName: 'Parrot', value: 3 },
 ];
+
+export const mockPetKindsByValue = {
+  1: { displayName: 'Cat', value: 1 },
+  2: { displayName: 'Dog', value: 2 },
+  3: { displayName: 'Parrot', value: 3 },
+};

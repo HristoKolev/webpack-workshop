@@ -1,5 +1,6 @@
 import {
-  ChangeEvent,
+  type ChangeEvent,
+  type JSX,
   memo,
   useCallback,
   useEffect,
@@ -7,11 +8,6 @@ import {
   useState,
 } from 'react';
 
-import { Modal } from '~shared/Modal';
-import { Pet } from '~utils/server-data-model';
-import { LoadingIndicator } from '~shared/LoadingIndicator';
-import { ErrorIndicator } from '~shared/ErrorIndicator';
-import { reportError } from '~utils/reportError';
 import { useAppDispatch, useAppSelector } from '~redux/createReduxStore';
 import {
   getPetThunk,
@@ -20,6 +16,11 @@ import {
   savePetThunk,
   selectedPetSelector,
 } from '~redux/globalSlice';
+import { ErrorIndicator } from '~shared/ErrorIndicator';
+import { LoadingIndicator } from '~shared/LoadingIndicator';
+import { Modal } from '~shared/Modal';
+import { reportError } from '~utils/reportError';
+import type { Pet } from '~utils/server-data-model';
 
 import { DeletePetModal } from './DeletePetModal';
 
@@ -28,7 +29,7 @@ import './EditPetModal.css';
 export interface EditPetModalProps {
   onClose?: () => void;
 
-  petId: number | undefined;
+  petId?: number;
 
   onSaved?: () => void;
 
@@ -190,20 +191,17 @@ export const EditPetModal = memo(
       setDeletePet(undefined);
     }, []);
 
-    const handleOnClose = useCallback(() => {
-      if (!selectedPetLoading && !savePetLoading) {
-        onClose?.();
-      }
-    }, [onClose, selectedPetLoading, savePetLoading]);
+    const handleOnClose = useCallback(() => onClose?.(), [onClose]);
 
     const handleOnDeleted = useCallback(() => {
-      handleOnClose();
+      onClose?.();
       onDeleted?.();
-    }, [onDeleted, handleOnClose]);
+    }, [onClose, onDeleted]);
 
     return (
       <Modal
         className="edit-pet-modal"
+        disableClosing={selectedPetLoading || savePetLoading}
         onClose={handleOnClose}
         ariaLabel={selectedPet ? 'View / Edit pet modal' : 'Add pet modal'}
       >
@@ -252,7 +250,11 @@ export const EditPetModal = memo(
                     !editingEnabled || Boolean(selectedPet) || savePetLoading
                   }
                 >
-                  <option value="" key="" />
+                  {!kind && (
+                    <option value="" key="">
+                      Please, select a pet kind
+                    </option>
+                  )}
                   {petKinds?.map((petKind) => (
                     <option value={petKind.value} key={petKind.value}>
                       {petKind.displayName}

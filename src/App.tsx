@@ -1,24 +1,30 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { type JSX, memo, useCallback, useEffect, useState } from 'react';
 
-import { PetListItem } from '~utils/server-data-model';
-import { ErrorIndicator } from '~shared/ErrorIndicator';
-import { LoadingIndicator } from '~shared/LoadingIndicator';
-import { DeletePetModal } from '~pages/DeletePetModal';
-import { EditPetModal } from '~pages/EditPetModal';
-import { PetList } from '~pages/PetList';
-import { useAppDispatch, useAppSelector } from '~redux/createReduxStore';
+import { DeletePetModal } from './pages/DeletePetModal';
+import { EditPetModal } from './pages/EditPetModal';
+import { PetList } from './pages/PetList';
+import { useAppDispatch, useAppSelector } from './redux/createReduxStore';
 import {
   fetchPetsData,
   globalActions,
   globalSelector,
-} from '~redux/globalSlice';
+} from './redux/globalSlice';
+import { ErrorIndicator } from './shared/ErrorIndicator';
+import { LoadingIndicator } from './shared/LoadingIndicator';
+import type { PetListItem } from './utils/server-data-model';
 
 import './App.css';
 
 export const App = memo((): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { petListById, petKinds, isError, isLoading } =
-    useAppSelector(globalSelector);
+  const {
+    petListById,
+    petKinds,
+    petKindsByValue,
+    petList,
+    isError,
+    isLoading,
+  } = useAppSelector(globalSelector);
 
   const fetchListData = useCallback(() => {
     void dispatch(fetchPetsData());
@@ -78,8 +84,13 @@ export const App = memo((): JSX.Element => {
       <div className="pet-list-page-content">
         {isError && <ErrorIndicator />}
         {isLoading && <LoadingIndicator />}
-        {!isLoading && !isError && (
-          <PetList onEdit={handleOnEditClick} onDelete={handleOnDeleteClick} />
+        {!isLoading && !isError && petKindsByValue && petList && (
+          <PetList
+            petList={petList}
+            petKindsByValue={petKindsByValue}
+            onEdit={handleOnEditClick}
+            onDelete={handleOnDeleteClick}
+          />
         )}
         {deletePet && (
           <DeletePetModal
