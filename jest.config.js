@@ -1,12 +1,7 @@
 module.exports = {
-  globals: {
-    fetch: global.fetch,
-    Request: global.Request,
-    Response: global.Response,
-    TextEncoder: global.TextEncoder,
-  },
   errorOnDeprecated: true,
   maxWorkers: '100%',
+  setupFiles: ['./jest.polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
