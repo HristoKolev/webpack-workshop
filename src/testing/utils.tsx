@@ -65,13 +65,19 @@ export const defaultHandlers: RequestHandler[] = [
     const petId = Number(params.petId);
     return HttpResponse.json(mockPetList.find((x) => x.petId === petId));
   }),
-  http.put(`${API_URL}/pet/:petId`, async ({ params, request: { body } }) => {
+  http.put(`${API_URL}/pet/:petId`, async ({ params, request }) => {
     await defaultWaitHandles.updatePetWaitHandle.wait();
+
     const petId = Number(params.petId);
+    const body = (await request.json()) as Record<string, unknown>;
+
     return HttpResponse.json({ ...body, petId });
   }),
-  http.post(`${API_URL}/pet`, async ({ request: { body } }) => {
+  http.post(`${API_URL}/pet`, async ({ request }) => {
     await defaultWaitHandles.createPetWaitHandle.wait();
+
+    const body = (await request.json()) as Record<string, unknown>;
+
     return HttpResponse.json({ ...body, petId: 43 });
   }),
 ];
