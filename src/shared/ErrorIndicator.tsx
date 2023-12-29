@@ -2,7 +2,7 @@ import { type JSX, memo } from 'react';
 
 import './ErrorIndicator.css';
 
-export interface ErrorIndicatorProps {
+interface ErrorIndicatorProps {
   errorMessage?: string;
   errorSubMessage?: string;
 }

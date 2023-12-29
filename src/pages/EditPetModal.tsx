@@ -26,7 +26,7 @@ import { DeletePetModal } from './DeletePetModal';
 
 import './EditPetModal.css';
 
-export interface EditPetModalProps {
+interface EditPetModalProps {
   onClose?: () => void;
 
   petId?: number;
@@ -255,11 +255,12 @@ export const EditPetModal = memo(
                       Please, select a pet kind
                     </option>
                   )}
-                  {petKinds?.map((petKind) => (
-                    <option value={petKind.value} key={petKind.value}>
-                      {petKind.displayName}
-                    </option>
-                  ))}
+                  {petKinds &&
+                    petKinds.map((petKind) => (
+                      <option value={petKind.value} key={petKind.value}>
+                        {petKind.displayName}
+                      </option>
+                    ))}
                 </select>
               </label>
 
