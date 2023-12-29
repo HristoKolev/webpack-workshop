@@ -18,7 +18,8 @@
   transition-delay: 0s;
 }
 
-.modal-bg {
+.modal-backdrop {
+  all: unset;
   position: absolute;
   background: rgba(0, 0, 0, 65%);
   width: 100%;
@@ -27,20 +28,34 @@
 
 .modal-container {
   border-radius: 4px;
-  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+  box-shadow:
+    0 2px 1px -1px rgb(0 0 0 / 20%),
+    0 1px 1px 0 rgb(0 0 0 / 14%),
+    0 1px 3px 0 rgb(0 0 0 / 12%);
   background: #fff;
   position: relative;
   padding: 30px;
 }
 
-.modal-close {
+.modal-close-button {
+  all: unset;
   position: absolute;
   right: 15px;
   top: 15px;
+  height: 30px;
+  width: 30px;
+}
+
+.modal-close-button img {
   outline: none;
   appearance: none;
   background: none;
   border: 0;
   font-weight: bold;
   cursor: pointer;
+}
+
+.modal-close-button:disabled img {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

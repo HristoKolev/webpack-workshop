@@ -6,15 +6,18 @@ import {
   within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
-import { rest } from 'msw';
 
-import { Pet } from '~utils/server-data-model';
-import { defaultHandlers, renderWithProviders } from '~testing/testing-utils';
 import { createReduxStore } from '~redux/createReduxStore';
 import { fetchPetsData } from '~redux/globalSlice';
-import { API_URL } from '~utils/api-client';
+import {
+  defaultHandlers,
+  defaultWaitHandles,
+  renderWithProviders,
+} from '~testing/utils';
 import { WaitHandle } from '~testing/wait-handle';
+import { API_URL } from '~utils/api-client';
 
 import { EditPetModal } from './EditPetModal';
 
@@ -23,20 +26,20 @@ jest.mock('../utils/reportError');
 const server = setupServer(...defaultHandlers);
 
 beforeAll(() => {
-  server.listen();
-});
-
-beforeEach(() => {
-  server.resetHandlers();
+  server.listen({ onUnhandledRequest: 'error' });
 });
 
 afterEach(() => {
+  server.resetHandlers();
   jest.restoreAllMocks();
+  defaultWaitHandles.disableAllHandles();
 });
 
 afterAll(() => {
   server.close();
 });
+
+const { getPetWaitHandle, updatePetWaitHandle } = defaultWaitHandles;
 
 interface RenderEditModalOptions {
   registerHandlers?: () => void;
@@ -176,26 +179,33 @@ const verifyDefaultFieldValues = () => {
 };
 
 test('edit modal defaults to view mode when called with a valid pet id', async () => {
+  getPetWaitHandle.enable();
+
   await renderEditModal();
 
   const loadingIndicator = await screen.findByTestId('loading-indicator');
+  getPetWaitHandle.release();
   await waitForElementToBeRemoved(loadingIndicator);
 
   await verifyDisplayMode();
 });
 
 test('shows error indicator when pet request fails', async () => {
+  const waitHandle = new WaitHandle();
+
   await renderEditModal({
     registerHandlers: () => {
       server.use(
-        rest.get(`${API_URL}/pet/:petId`, async (_req, res, ctx) =>
-          res(ctx.status(500))
-        )
+        http.get(`${API_URL}/pet/:petId`, async () => {
+          await waitHandle.wait();
+          return new HttpResponse(null, { status: 500 });
+        })
       );
     },
   });
 
   const loadingIndicator = await screen.findByTestId('loading-indicator');
+  waitHandle.release();
   await waitForElementToBeRemoved(loadingIndicator);
 
   await waitFor(() => {
@@ -267,15 +277,9 @@ test('transitions back to display mode when the cancel button is clicked', async
   await verifyDisplayMode();
 });
 
-test('clicking save transitions the form to display mode', async () => {
-  const user = userEvent.setup();
-
-  await renderEditModal();
-
-  const editButton = await screen.findByRole('button', { name: 'Edit' });
-
-  await user.click(editButton);
-
+const changeEditFormFields = async (
+  user: ReturnType<typeof userEvent.setup>
+) => {
   const nameField = screen.getByLabelText('Name:');
   const ageField = screen.getByLabelText('Age:');
   const healthProblemsField = screen.getByLabelText('Health Problems:');
@@ -288,24 +292,25 @@ test('clicking save transitions the form to display mode', async () => {
   await user.click(healthProblemsField);
   await user.clear(notesField);
   await user.type(notesField, 'Notes 123');
+};
 
-  const waitHande = new WaitHandle();
+test('clicking save transitions the form to display mode', async () => {
+  const user = userEvent.setup();
 
-  server.use(
-    rest.put(`${API_URL}/pet/:petId`, async (req, res, ctx) => {
-      await waitHande.wait();
-      const petId = Number(req.params.petId);
-      const body: Pet = await req.json();
-      return res(ctx.json({ ...body, petId }));
-    })
-  );
+  await renderEditModal();
+
+  await user.click(await screen.findByRole('button', { name: 'Edit' }));
+
+  await changeEditFormFields(user);
+
+  updatePetWaitHandle.enable();
 
   const saveButton = screen.getByRole('button', { name: 'Save' });
 
   await user.click(saveButton);
 
   const loadingIndicator = await screen.findByTestId('loading-indicator');
-  waitHande.release();
+  updatePetWaitHandle.release();
   await waitForElementToBeRemoved(loadingIndicator);
 
   await verifyDisplayMode();
@@ -349,22 +354,9 @@ test('form is returned to display mode when the cancel button is clicked', async
 
   await renderEditModal();
 
-  const editButton = await screen.findByRole('button', { name: 'Edit' });
+  await user.click(await screen.findByRole('button', { name: 'Edit' }));
 
-  await user.click(editButton);
-
-  const nameField = screen.getByLabelText('Name:');
-  const ageField = screen.getByLabelText('Age:');
-  const healthProblemsField = screen.getByLabelText('Health Problems:');
-  const notesField = screen.getByLabelText('Notes:');
-
-  await user.clear(nameField);
-  await user.type(nameField, 'test123');
-  await user.clear(ageField);
-  await user.type(ageField, '2');
-  await user.click(healthProblemsField);
-  await user.clear(notesField);
-  await user.type(notesField, 'Notes 123');
+  await changeEditFormFields(user);
 
   const cancelButton = screen.getByRole('button', { name: 'Cancel' });
 
@@ -380,29 +372,16 @@ test('cancel button resets the state successfully after failed update request', 
 
   await renderEditModal();
 
-  const editButton = await screen.findByRole('button', { name: 'Edit' });
+  await user.click(await screen.findByRole('button', { name: 'Edit' }));
 
-  await user.click(editButton);
-
-  const nameField = screen.getByLabelText('Name:');
-  const ageField = screen.getByLabelText('Age:');
-  const healthProblemsField = screen.getByLabelText('Health Problems:');
-  const notesField = screen.getByLabelText('Notes:');
-
-  await user.clear(nameField);
-  await user.type(nameField, 'test123');
-  await user.clear(ageField);
-  await user.type(ageField, '2');
-  await user.click(healthProblemsField);
-  await user.clear(notesField);
-  await user.type(notesField, 'Notes 123');
+  await changeEditFormFields(user);
 
   const waitHandle = new WaitHandle();
 
   server.use(
-    rest.put(`${API_URL}/pet/:petId`, async (_req, res, ctx) => {
+    http.put(`${API_URL}/pet/:petId`, async () => {
       await waitHandle.wait();
-      return res(ctx.status(500));
+      return new HttpResponse(null, { status: 500 });
     })
   );
 
@@ -454,9 +433,9 @@ test('will not submit data if input validation fails', async () => {
   const updateEndpointFunc = jest.fn();
 
   server.use(
-    rest.put(`${API_URL}/pet/:petId`, async (_req, res, ctx) => {
+    http.put(`${API_URL}/pet/:petId`, () => {
       updateEndpointFunc();
-      return res(ctx.json({}));
+      return HttpResponse.json({});
     })
   );
 
@@ -468,25 +447,7 @@ test('will not submit data if input validation fails', async () => {
 });
 
 describe('add mode', () => {
-  test('error indicator is shown when the add request fails', async () => {
-    const user = userEvent.setup();
-
-    const waitHandle = new WaitHandle();
-
-    await renderEditModal({
-      registerHandlers: () => {
-        server.use(
-          rest.post(`${API_URL}/pet`, async (_req, res, ctx) => {
-            await waitHandle.wait();
-            return res(ctx.status(500));
-          })
-        );
-      },
-      addMode: true,
-    });
-
-    verifyAddMode();
-
+  const fillForm = async (user: ReturnType<typeof userEvent.setup>) => {
     const nameField = screen.getByLabelText('Name:');
     const kindField = screen.getByLabelText('Kind:');
     const ageField = screen.getByLabelText('Age:');
@@ -504,6 +465,28 @@ describe('add mode', () => {
     await user.type(addedDateField, '2023-10-10');
     await user.clear(notesField);
     await user.type(notesField, 'Notes 123');
+  };
+
+  test('error indicator is shown when the add request fails', async () => {
+    const user = userEvent.setup();
+
+    const waitHandle = new WaitHandle();
+
+    await renderEditModal({
+      registerHandlers: () => {
+        server.use(
+          http.post(`${API_URL}/pet`, async () => {
+            await waitHandle.wait();
+            return new HttpResponse(null, { status: 500 });
+          })
+        );
+      },
+      addMode: true,
+    });
+
+    verifyAddMode();
+
+    await fillForm(user);
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -527,23 +510,7 @@ describe('add mode', () => {
 
     verifyAddMode();
 
-    const nameField = screen.getByLabelText('Name:');
-    const kindField = screen.getByLabelText('Kind:');
-    const ageField = screen.getByLabelText('Age:');
-    const healthProblemsField = screen.getByLabelText('Health Problems:');
-    const addedDateField = screen.getByLabelText('Added Date:');
-    const notesField = screen.getByLabelText('Notes:');
-
-    await user.clear(nameField);
-    await user.type(nameField, 'test123');
-    await user.selectOptions(kindField, ['Cat']);
-    await user.clear(ageField);
-    await user.type(ageField, '2');
-    await user.click(healthProblemsField);
-    await user.clear(addedDateField);
-    await user.type(addedDateField, '2023-10-10');
-    await user.clear(notesField);
-    await user.type(notesField, 'Notes 123');
+    await fillForm(user);
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
 

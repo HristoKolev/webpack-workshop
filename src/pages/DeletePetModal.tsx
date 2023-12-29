@@ -1,16 +1,16 @@
-import { memo, useCallback } from 'react';
+import { type JSX, memo, useCallback } from 'react';
 
-import { Modal } from '~shared/Modal';
-import { PetListItem } from '~utils/server-data-model';
-import { LoadingIndicator } from '~shared/LoadingIndicator';
-import { ErrorIndicator } from '~shared/ErrorIndicator';
 import { useAppDispatch, useAppSelector } from '~redux/createReduxStore';
 import {
   deletePetStateSelector,
   deletePetThunk,
   globalSelector,
 } from '~redux/globalSlice';
+import { ErrorIndicator } from '~shared/ErrorIndicator';
+import { LoadingIndicator } from '~shared/LoadingIndicator';
+import { Modal } from '~shared/Modal';
 import { reportError } from '~utils/reportError';
+import type { PetListItem } from '~utils/server-data-model';
 
 import './DeletePetModal.css';
 
@@ -30,11 +30,7 @@ export const DeletePetModal = memo(
       deletePetStateSelector
     );
 
-    const handleOnClose = useCallback(() => {
-      if (!deleteLoading) {
-        onClose?.();
-      }
-    }, [deleteLoading, onClose]);
+    const handleOnClose = useCallback(() => onClose?.(), [onClose]);
 
     const handleOnConfirmClick = useCallback(async () => {
       try {
@@ -49,6 +45,7 @@ export const DeletePetModal = memo(
     return (
       <Modal
         className="delete-pet-modal"
+        disableClosing={deleteLoading}
         onClose={handleOnClose}
         ariaLabel="Delete pet modal"
       >

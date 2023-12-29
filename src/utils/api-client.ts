@@ -1,4 +1,4 @@
-import { Pet, PetKind, PetListItem } from './server-data-model';
+import type { Pet, PetKind, PetListItem } from './server-data-model';
 
 const DEFAULT_FETCH_TIMEOUT = 30 * 1000; // 30 seconds.
 export const API_URL = 'http://localhost:5150';

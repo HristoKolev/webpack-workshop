@@ -1,4 +1,3 @@
-import { setupServer } from 'msw/node';
 import {
   act,
   screen,
@@ -6,16 +5,17 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
+import { setupServer } from 'msw/node';
 
-import { defaultHandlers, renderWithProviders } from '~testing/testing-utils';
-import { PetListItem } from '~utils/server-data-model';
 import { createReduxStore } from '~redux/createReduxStore';
 import { fetchPetsData } from '~redux/globalSlice';
-import { API_URL } from '~utils/api-client';
 import { mockPetList } from '~testing/mock-data';
-import { reportError } from '~utils/reportError';
+import { defaultHandlers, renderWithProviders } from '~testing/utils';
 import { WaitHandle } from '~testing/wait-handle';
+import { API_URL } from '~utils/api-client';
+import { reportError } from '~utils/reportError';
+import type { PetListItem } from '~utils/server-data-model';
 
 import { DeletePetModal } from './DeletePetModal';
 
@@ -24,11 +24,12 @@ jest.mock('../utils/reportError');
 const server = setupServer(...defaultHandlers);
 
 beforeAll(() => {
-  server.listen();
+  server.listen({ onUnhandledRequest: 'error' });
 });
 
-beforeEach(() => {
+afterEach(() => {
   server.resetHandlers();
+  jest.restoreAllMocks();
 });
 
 afterAll(() => {
@@ -107,11 +108,11 @@ test('delete pet endpoint is called on confirm click', async () => {
   const waitHandle = new WaitHandle();
 
   server.use(
-    rest.delete(`${API_URL}/pet/:petId`, async (req, res, ctx) => {
+    http.delete(`${API_URL}/pet/:petId`, async ({ params }) => {
       await waitHandle.wait();
-      const petId = Number(req.params.petId);
+      const petId = Number(params.petId);
       onDeletePetEndpoint(petId);
-      return res(ctx.json(mockPetList.find((x) => x.petId === petId)));
+      return HttpResponse.json(mockPetList.find((x) => x.petId === petId));
     })
   );
 
@@ -140,9 +141,9 @@ test('shows error when the delete call fails', async () => {
   const waitHandle = new WaitHandle();
 
   server.use(
-    rest.delete(`${API_URL}/pet/:petId`, async (_req, res, ctx) => {
+    http.delete(`${API_URL}/pet/:petId`, async () => {
       await waitHandle.wait();
-      return res(ctx.status(500));
+      return new HttpResponse(null, { status: 500 });
     })
   );
 

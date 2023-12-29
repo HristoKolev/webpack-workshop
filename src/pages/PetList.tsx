@@ -1,15 +1,8 @@
-import { memo, MouseEvent, useCallback } from 'react';
+import { type JSX, type MouseEvent, memo, useCallback } from 'react';
 
-import { useAppSelector } from '~redux/createReduxStore';
-import { globalSelector } from '~redux/globalSlice';
+import type { PetKind, PetListItem } from '~utils/server-data-model';
 
 import './PetList.css';
-
-interface PetsListProps {
-  onEdit: (petId: number) => void;
-
-  onDelete: (petId: number) => void;
-}
 
 const formatDate = (date: string): string =>
   new Date(`${date}T00:00:00`).toLocaleDateString('en-GB', {
@@ -18,15 +11,28 @@ const formatDate = (date: string): string =>
     year: 'numeric',
   });
 
-export const PetList = memo(
-  ({ onEdit, onDelete }: PetsListProps): JSX.Element => {
-    const { petList, petKindsByValue } = useAppSelector(globalSelector);
+interface PetsListProps {
+  onEdit: (petId: number) => void;
 
+  onDelete: (petId: number) => void;
+
+  petKindsByValue: Record<number, PetKind | undefined>;
+
+  petList: PetListItem[];
+}
+
+export const PetList = memo(
+  ({
+    onEdit,
+    onDelete,
+    petList,
+    petKindsByValue,
+  }: PetsListProps): JSX.Element => {
     const handleOnDeleteClick = useCallback(
       (ev: MouseEvent) => {
         const button = ev.target as HTMLButtonElement;
         const petId = Number(button.getAttribute('data-pet-id'));
-        onDelete?.(petId);
+        onDelete(petId);
       },
       [onDelete]
     );
@@ -35,7 +41,7 @@ export const PetList = memo(
       (ev: MouseEvent) => {
         const button = ev.target as HTMLButtonElement;
         const petId = Number(button.getAttribute('data-pet-id'));
-        onEdit?.(petId);
+        onEdit(petId);
       },
       [onEdit]
     );
@@ -60,15 +66,17 @@ export const PetList = memo(
               <th
                 className="custom-table-header-cell edit-row-header"
                 scope="col"
+                aria-hidden
               />
               <th
                 className="custom-table-header-cell delete-row-header"
                 scope="col"
+                aria-hidden
               />
             </tr>
           </thead>
           <tbody className="custom-table-body">
-            {petList?.map((pet) => (
+            {petList.map((pet) => (
               <tr className="custom-table-row" key={pet.petId} aria-label="Pet">
                 <th
                   className="custom-table-first-cell"
@@ -84,7 +92,7 @@ export const PetList = memo(
                   {formatDate(pet.addedDate)}
                 </td>
                 <td className="custom-table-cell" data-testid="col_petKind">
-                  {petKindsByValue?.[pet.kind]?.displayName}
+                  {petKindsByValue[pet.kind]?.displayName}
                 </td>
                 <td className="custom-table-cell">
                   <button
@@ -110,7 +118,7 @@ export const PetList = memo(
             ))}
           </tbody>
         </table>
-        {!petList?.length && <div className="no-items-label">No items.</div>}
+        {!petList.length && <div className="no-items-label">No items.</div>}
       </div>
     );
   }
