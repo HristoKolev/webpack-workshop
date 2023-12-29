@@ -2,7 +2,7 @@ import { type JSX, memo } from 'react';
 
 import './LoadingIndicator.css';
 
-export interface LoadingIndicatorProps {
+interface LoadingIndicatorProps {
   text?: string;
 }
 

@@ -92,7 +92,7 @@ export const PetList = memo(
                   {formatDate(pet.addedDate)}
                 </td>
                 <td className="custom-table-cell" data-testid="col_petKind">
-                  {petKindsByValue[pet.kind]?.displayName}
+                  {petKindsByValue[pet.kind]?.displayName || ''}
                 </td>
                 <td className="custom-table-cell">
                   <button

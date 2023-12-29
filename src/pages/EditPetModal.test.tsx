@@ -532,4 +532,23 @@ describe('add mode', () => {
 
     expect(handleOnClose).toHaveBeenCalled();
   });
+
+  test('once pet kind is selected the empty option is removed from the list', async () => {
+    const user = userEvent.setup();
+
+    await renderEditModal({ addMode: true });
+
+    const kindField = screen.getByLabelText('Kind:');
+
+    const getOptionValues = () =>
+      within(kindField)
+        .getAllByRole<HTMLOptionElement>('option')
+        .map((x) => x.value);
+
+    expect(getOptionValues()).toStrictEqual(['', '1', '2', '3']);
+
+    await user.selectOptions(kindField, ['Cat']);
+
+    expect(getOptionValues()).toStrictEqual(['1', '2', '3']);
+  });
 });

@@ -14,7 +14,7 @@ import type { PetListItem } from '~utils/server-data-model';
 
 import './DeletePetModal.css';
 
-export interface DeletePetModalProps {
+interface DeletePetModalProps {
   onClose?: () => void;
 
   pet: PetListItem;
@@ -45,8 +45,8 @@ export const DeletePetModal = memo(
     return (
       <Modal
         className="delete-pet-modal"
-        disableClosing={deleteLoading}
         onClose={handleOnClose}
+        disableClosing={deleteLoading}
         ariaLabel="Delete pet modal"
       >
         <h1>Are you sure you want to delete this pet?</h1>
@@ -68,7 +68,7 @@ export const DeletePetModal = memo(
             className="delete-pet-modal-list-item"
             data-testid="delete-modal_petKind"
           >
-            Pet Kind: {petKindsByValue?.[pet.kind]?.displayName}
+            Pet Kind: {petKindsByValue?.[pet.kind]?.displayName || ''}
           </div>
         </div>
 

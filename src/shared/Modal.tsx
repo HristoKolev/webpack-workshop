@@ -5,7 +5,7 @@ import closeModalPng from './close-modal.png';
 
 import './Modal.css';
 
-export interface ModalProps {
+interface ModalProps {
   children: ReactNode;
 
   className?: string;

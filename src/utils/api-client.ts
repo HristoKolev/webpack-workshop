@@ -26,7 +26,7 @@ const customFetch = async (
 export const getPetList = async (): Promise<PetListItem[]> => {
   const httpResponse = await customFetch(`${API_URL}/pet/all`);
   if (!httpResponse.ok) {
-    throw new Error(`Non 200 response received from GET /pet/all`);
+    throw new Error('Non 200 response received from GET /pet/all');
   }
   return (await httpResponse.json()) as PetListItem[];
 };
@@ -34,7 +34,7 @@ export const getPetList = async (): Promise<PetListItem[]> => {
 export const getPetKinds = async (): Promise<PetKind[]> => {
   const httpResponse = await customFetch(`${API_URL}/pet/kinds`);
   if (!httpResponse.ok) {
-    throw new Error(`Non 200 response received from GET /pet/kinds`);
+    throw new Error('Non 200 response received from GET /pet/kinds');
   }
   return (await httpResponse.json()) as PetKind[];
 };
@@ -85,7 +85,7 @@ export const createPet = async (petData: Omit<Pet, 'petId'>): Promise<Pet> => {
     body: JSON.stringify(petData),
   });
   if (!httpResponse.ok) {
-    throw new Error(`Non 200 response received from POST /pet`);
+    throw new Error('Non 200 response received from POST /pet');
   }
   return (await httpResponse.json()) as Pet;
 };
