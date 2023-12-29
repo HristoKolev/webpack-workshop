@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 
 import { type ReduxStoreType, createReduxStore } from '~redux/createReduxStore';
 import { createWaitHandleCollection } from '~testing/wait-handle';
-import { API_URL } from '~utils/api-client';
+import { BASE_URL } from '~utils/api-client';
 
 import { mockPetKinds, mockPetList } from './mock-data';
 
@@ -40,7 +40,7 @@ export const defaultWaitHandles = createWaitHandleCollection<
 >();
 
 export const defaultHandlers: RequestHandler[] = [
-  http.get(`${API_URL}/pet/all`, async () => {
+  http.get(`${BASE_URL}/pet/all`, async () => {
     await defaultWaitHandles.getAllPetsWaitHandle.wait();
     return HttpResponse.json(
       mockPetList.map((pet) => ({
@@ -51,21 +51,21 @@ export const defaultHandlers: RequestHandler[] = [
       }))
     );
   }),
-  http.get(`${API_URL}/pet/kinds`, async () => {
+  http.get(`${BASE_URL}/pet/kinds`, async () => {
     await defaultWaitHandles.getPetKindsWaitHandle.wait();
     return HttpResponse.json(mockPetKinds);
   }),
-  http.get(`${API_URL}/pet/:petId`, async ({ params }) => {
+  http.get(`${BASE_URL}/pet/:petId`, async ({ params }) => {
     await defaultWaitHandles.getPetWaitHandle.wait();
     const petId = Number(params.petId);
     return HttpResponse.json(mockPetList.find((x) => x.petId === petId));
   }),
-  http.delete(`${API_URL}/pet/:petId`, async ({ params }) => {
+  http.delete(`${BASE_URL}/pet/:petId`, async ({ params }) => {
     await defaultWaitHandles.deletePetWaitHandle.wait();
     const petId = Number(params.petId);
     return HttpResponse.json(mockPetList.find((x) => x.petId === petId));
   }),
-  http.put(`${API_URL}/pet/:petId`, async ({ params, request }) => {
+  http.put(`${BASE_URL}/pet/:petId`, async ({ params, request }) => {
     await defaultWaitHandles.updatePetWaitHandle.wait();
 
     const petId = Number(params.petId);
@@ -73,7 +73,7 @@ export const defaultHandlers: RequestHandler[] = [
 
     return HttpResponse.json({ ...body, petId });
   }),
-  http.post(`${API_URL}/pet`, async ({ request }) => {
+  http.post(`${BASE_URL}/pet`, async ({ request }) => {
     await defaultWaitHandles.createPetWaitHandle.wait();
 
     const body = (await request.json()) as Record<string, unknown>;

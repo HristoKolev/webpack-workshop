@@ -203,7 +203,7 @@ export const EditPetModal = memo(
         className="edit-pet-modal"
         disableClosing={selectedPetLoading || savePetLoading}
         onClose={handleOnClose}
-        ariaLabel={selectedPet ? 'View / Edit pet modal' : 'Add pet modal'}
+        ariaLabel={`${getFormTitle(selectedPet, editingEnabled)} modal`}
       >
         {deletePet && (
           <DeletePetModal
@@ -335,7 +335,7 @@ export const EditPetModal = memo(
                 <>
                   <button
                     type="button"
-                    className="custom-button warningButton edit-button"
+                    className="btn btn-orange"
                     onClick={handleOnEditClick}
                   >
                     Edit
@@ -343,7 +343,7 @@ export const EditPetModal = memo(
 
                   <button
                     type="button"
-                    className="custom-button errorButton delete-button"
+                    className="btn btn-red"
                     onClick={handleOnDeleteClick}
                   >
                     Delete
@@ -354,7 +354,7 @@ export const EditPetModal = memo(
               {editingEnabled && (
                 <button
                   type="button"
-                  className="custom-button blueButton save-button"
+                  className="btn btn-blue"
                   onClick={handleOnSaveClick}
                   disabled={savePetLoading}
                 >
@@ -364,7 +364,7 @@ export const EditPetModal = memo(
 
               <button
                 type="button"
-                className="custom-button grayButton cancel-button"
+                className="btn btn-gray"
                 onClick={handleOnCancelClick}
                 disabled={savePetLoading}
               >

@@ -12,6 +12,8 @@ interface ModalProps {
 
   ariaLabel?: string;
 
+  ariaLabelledBy?: string;
+
   disableClosing?: boolean;
 
   onClose?: () => void;
@@ -23,12 +25,13 @@ const ModalImpl = memo(
     onClose,
     className,
     ariaLabel,
+    ariaLabelledBy,
     disableClosing,
   }: ModalProps): JSX.Element => {
     const handleOnClose = useCallback(() => onClose?.(), [onClose]);
 
     return (
-      <div className="modal open">
+      <div className="modal">
         <button
           type="button"
           className="modal-backdrop"
@@ -38,9 +41,10 @@ const ModalImpl = memo(
           onClick={handleOnClose}
         />
         <div
-          className={`modal-container ${className || ''}`}
+          className={`modal-body ${className || ''}`}
           role="dialog"
-          aria-label={ariaLabel}
+          {...(ariaLabel ? { 'aria-label': ariaLabel } : {})}
+          {...(ariaLabelledBy ? { 'aria-labelledby': ariaLabelledBy } : {})}
         >
           {children}
           <button

@@ -82,7 +82,7 @@ export const DeletePetModal = memo(
         <div className="button-group">
           <button
             type="button"
-            className="custom-button errorButton confirm-button"
+            className="btn btn-red"
             onClick={handleOnConfirmClick}
             disabled={deleteLoading}
           >
@@ -90,7 +90,7 @@ export const DeletePetModal = memo(
           </button>
           <button
             type="button"
-            className="custom-button grayButton cancel-button"
+            className="btn btn-gray"
             onClick={handleOnClose}
             disabled={deleteLoading}
           >

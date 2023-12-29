@@ -17,7 +17,7 @@ import {
   renderWithProviders,
 } from '~testing/utils';
 import { WaitHandle } from '~testing/wait-handle';
-import { API_URL } from '~utils/api-client';
+import { BASE_URL } from '~utils/api-client';
 
 import { EditPetModal } from './EditPetModal';
 
@@ -196,7 +196,7 @@ test('shows error indicator when pet request fails', async () => {
   await renderEditModal({
     registerHandlers: () => {
       server.use(
-        http.get(`${API_URL}/pet/:petId`, async () => {
+        http.get(`${BASE_URL}/pet/:petId`, async () => {
           await waitHandle.wait();
           return new HttpResponse(null, { status: 500 });
         })
@@ -379,7 +379,7 @@ test('cancel button resets the state successfully after failed update request', 
   const waitHandle = new WaitHandle();
 
   server.use(
-    http.put(`${API_URL}/pet/:petId`, async () => {
+    http.put(`${BASE_URL}/pet/:petId`, async () => {
       await waitHandle.wait();
       return new HttpResponse(null, { status: 500 });
     })
@@ -433,7 +433,7 @@ test('will not submit data if input validation fails', async () => {
   const updateEndpointFunc = jest.fn();
 
   server.use(
-    http.put(`${API_URL}/pet/:petId`, () => {
+    http.put(`${BASE_URL}/pet/:petId`, () => {
       updateEndpointFunc();
       return HttpResponse.json({});
     })
@@ -475,7 +475,7 @@ describe('add mode', () => {
     await renderEditModal({
       registerHandlers: () => {
         server.use(
-          http.post(`${API_URL}/pet`, async () => {
+          http.post(`${BASE_URL}/pet`, async () => {
             await waitHandle.wait();
             return new HttpResponse(null, { status: 500 });
           })
