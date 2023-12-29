@@ -104,7 +104,7 @@ export const App = memo((): JSX.Element => {
         {petKinds && (
           <button
             type="button"
-            className="custom-button success-button add-pet-button"
+            className="btn btn-green add-pet-button"
             onClick={handleOnAddClick}
           >
             Add Pet

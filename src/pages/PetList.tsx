@@ -97,7 +97,7 @@ export const PetList = memo(
                 <td className="custom-table-cell">
                   <button
                     type="button"
-                    className="custom-button warningButton edit-button"
+                    className="btn btn-orange"
                     data-pet-id={pet.petId}
                     onClick={handleOnEditClick}
                   >
@@ -107,7 +107,7 @@ export const PetList = memo(
                 <td className="custom-table-cell">
                   <button
                     type="button"
-                    className="custom-button errorButton delete-button"
+                    className="btn btn-red"
                     onClick={handleOnDeleteClick}
                     data-pet-id={pet.petId}
                   >

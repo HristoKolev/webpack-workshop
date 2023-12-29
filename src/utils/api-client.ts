@@ -1,91 +1,75 @@
+import { reportError } from '~utils/reportError';
+
 import type { Pet, PetKind, PetListItem } from './server-data-model';
 
-const DEFAULT_FETCH_TIMEOUT = 30 * 1000; // 30 seconds.
-export const API_URL = 'http://localhost:5150';
+const REQUEST_TIMEOUT = 30 * 1000; // 30 seconds.
+export const BASE_URL = 'http://localhost:5150';
 
-const customFetch = async (
-  input: RequestInfo,
-  init?: RequestInit
-): Promise<Response> => {
-  const abortController = new AbortController();
-  const handle = setTimeout(
-    () => abortController.abort(),
-    DEFAULT_FETCH_TIMEOUT
-  );
+export const fetchJSON = async <T>(
+  httpRequest: RequestInit & { url: string }
+) => {
+  const ac = new AbortController();
+  const timeoutId = setTimeout(() => ac.abort(), REQUEST_TIMEOUT);
 
+  let httpResponse;
   try {
-    return await fetch(input, {
-      signal: abortController.signal,
-      ...(init || {}),
+    httpResponse = await fetch(httpRequest.url, {
+      signal: ac.signal,
+      ...httpRequest,
     });
   } finally {
-    clearTimeout(handle);
+    clearTimeout(timeoutId);
   }
-};
 
-export const getPetList = async (): Promise<PetListItem[]> => {
-  const httpResponse = await customFetch(`${API_URL}/pet/all`);
   if (!httpResponse.ok) {
-    throw new Error('Non 200 response received from GET /pet/all');
+    throw new Error(
+      `${httpResponse.status} status code received from ${httpRequest.method} ${httpRequest.url}`
+    );
   }
-  return (await httpResponse.json()) as PetListItem[];
+
+  try {
+    return (await httpResponse.json()) as T;
+  } catch (error) {
+    reportError(error);
+    throw new Error(
+      `Failed to parse JSON from ${httpRequest.method} ${httpRequest.url}`
+    );
+  }
 };
 
-export const getPetKinds = async (): Promise<PetKind[]> => {
-  const httpResponse = await customFetch(`${API_URL}/pet/kinds`);
-  if (!httpResponse.ok) {
-    throw new Error('Non 200 response received from GET /pet/kinds');
-  }
-  return (await httpResponse.json()) as PetKind[];
-};
+export const getPetList = (): Promise<PetListItem[]> =>
+  fetchJSON({ method: 'GET', url: `${BASE_URL}/pet/all` });
 
-export const getPet = async (petId: number): Promise<Pet> => {
-  const httpResponse = await customFetch(`${API_URL}/pet/${petId}`);
-  if (!httpResponse.ok) {
-    throw new Error(`Non 200 response received from GET /pet/${petId}`);
-  }
-  return (await httpResponse.json()) as Pet;
-};
+export const getPetKinds = (): Promise<PetKind[]> =>
+  fetchJSON({ method: 'GET', url: `${BASE_URL}/pet/kinds` });
 
-export const deletePet = async (petId: number): Promise<Pet> => {
-  const httpResponse = await customFetch(`${API_URL}/pet/${petId}`, {
-    method: 'DELETE',
-  });
-  if (!httpResponse.ok) {
-    throw new Error(`Non 200 response received from DELETE /pet/${petId}`);
-  }
-  return (await httpResponse.json()) as Pet;
-};
+export const getPet = (petId: number): Promise<Pet> =>
+  fetchJSON({ method: 'GET', url: `${BASE_URL}/pet/${petId}` });
 
-export const updatePet = async (
+export const deletePet = (petId: number): Promise<Pet> =>
+  fetchJSON({ method: 'DELETE', url: `${BASE_URL}/pet/${petId}` });
+
+export const updatePet = (
   petId: number,
   petData: Omit<Pet, 'petId'>
-): Promise<Pet> => {
-  const httpResponse = await customFetch(`${API_URL}/pet/${petId}`, {
+): Promise<Pet> =>
+  fetchJSON({
     method: 'PUT',
+    url: `${BASE_URL}/pet/${petId}`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
     body: JSON.stringify(petData),
   });
-  if (!httpResponse.ok) {
-    throw new Error(`Non 200 response received from PUT /pet/${petId}`);
-  }
-  return (await httpResponse.json()) as Pet;
-};
 
-export const createPet = async (petData: Omit<Pet, 'petId'>): Promise<Pet> => {
-  const httpResponse = await customFetch(`${API_URL}/pet`, {
+export const createPet = (petData: Omit<Pet, 'petId'>): Promise<Pet> =>
+  fetchJSON({
     method: 'POST',
+    url: `${BASE_URL}/pet`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
     body: JSON.stringify(petData),
   });
-  if (!httpResponse.ok) {
-    throw new Error('Non 200 response received from POST /pet');
-  }
-  return (await httpResponse.json()) as Pet;
-};

@@ -11,7 +11,7 @@ import { setupServer } from 'msw/node';
 import { mockPetKindsByValue, mockPetList } from '~testing/mock-data';
 import { defaultHandlers } from '~testing/utils';
 import { WaitHandle } from '~testing/wait-handle';
-import { API_URL } from '~utils/api-client';
+import { BASE_URL } from '~utils/api-client';
 import { reportError } from '~utils/reportError';
 import type { PetListItem } from '~utils/server-data-model';
 
@@ -100,7 +100,7 @@ test('delete pet endpoint is called on confirm click', async () => {
   const waitHandle = new WaitHandle();
 
   server.use(
-    http.delete(`${API_URL}/pet/:petId`, async ({ params }) => {
+    http.delete(`${BASE_URL}/pet/:petId`, async ({ params }) => {
       await waitHandle.wait();
       const petId = Number(params.petId);
       onDeletePetEndpoint(petId);
@@ -133,7 +133,7 @@ test('shows error when the delete call fails', async () => {
   const waitHandle = new WaitHandle();
 
   server.use(
-    http.delete(`${API_URL}/pet/:petId`, async () => {
+    http.delete(`${BASE_URL}/pet/:petId`, async () => {
       await waitHandle.wait();
       return new HttpResponse(null, { status: 500 });
     })
