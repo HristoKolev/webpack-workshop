@@ -15,7 +15,7 @@ test('shows a message when there are no pets', async () => {
   render(
     <PetList
       petList={[]}
-      petKindsByValue={{}}
+      petKindsByValue={mockPetKindsByValue}
       onEdit={jest.fn}
       onDelete={jest.fn}
     />

@@ -1,4 +1,5 @@
 import {
+  render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
@@ -9,11 +10,7 @@ import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
 
 import { App } from './App';
-import {
-  defaultHandlers,
-  defaultWaitHandles,
-  renderWithProviders,
-} from './testing/utils';
+import { defaultHandlers, defaultWaitHandles } from './testing/utils';
 import { WaitHandle } from './testing/wait-handle';
 import { API_URL } from './utils/api-client';
 
@@ -39,7 +36,7 @@ const { getPetKindsWaitHandle } = defaultWaitHandles;
 
 describe('landing page', () => {
   test('shows app heading', () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     expect(
       screen.getByRole('heading', { name: 'Pet Store' })
@@ -49,7 +46,7 @@ describe('landing page', () => {
   test('add pet button is only shown after the first fetch', async () => {
     getPetKindsWaitHandle.enable();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     expect(
       screen.queryByRole('button', { name: 'Add Pet' })
@@ -65,7 +62,7 @@ describe('landing page', () => {
   test('displays a list of pets', async () => {
     getPetKindsWaitHandle.enable();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const loadingIndicator = await screen.findByTestId('loading-indicator');
     getPetKindsWaitHandle.release();
@@ -86,7 +83,7 @@ describe('landing page', () => {
       })
     );
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const loadingIndicator = await screen.findByTestId('loading-indicator');
     waitHandle.release();
@@ -107,7 +104,7 @@ describe('landing page', () => {
       })
     );
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const loadingIndicator = await screen.findByTestId('loading-indicator');
     waitHandle.release();
@@ -123,7 +120,7 @@ describe('modals', () => {
   test('view / edit button brings up the details modal and cancel closes it', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const petsTable = await screen.findByRole('table');
     const petRow = within(petsTable).getAllByRole('row', { name: 'Pet' })[0];
@@ -148,7 +145,7 @@ describe('modals', () => {
   test('delete button brings up the delete modal and cancel closes it', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const petsTable = await screen.findByRole('table');
     const petRow = within(petsTable).getAllByRole('row', { name: 'Pet' })[0];
@@ -173,7 +170,7 @@ describe('modals', () => {
   test('add buttons brings up the add modal and cancel closes it', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const addButton = await screen.findByRole('button', { name: 'Add Pet' });
 
@@ -197,7 +194,7 @@ describe('re-fresh pet list', () => {
   test('re-fetches the list of pets when a pet is deleted', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const table = await screen.findByRole('table');
     const row = within(table).getAllByRole('row', { name: 'Pet' })[0];
@@ -238,7 +235,7 @@ describe('re-fresh pet list', () => {
   test('re-fetches the list of pets when a pet is saved', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     const table = await screen.findByRole('table');
     const row = within(table).getAllByRole('row', { name: 'Pet' })[0];

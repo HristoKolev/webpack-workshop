@@ -1,5 +1,5 @@
 import {
-  act,
+  render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
@@ -8,10 +8,8 @@ import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { createReduxStore } from '~redux/createReduxStore';
-import { fetchPetsData } from '~redux/globalSlice';
-import { mockPetList } from '~testing/mock-data';
-import { defaultHandlers, renderWithProviders } from '~testing/utils';
+import { mockPetKindsByValue, mockPetList } from '~testing/mock-data';
+import { defaultHandlers } from '~testing/utils';
 import { WaitHandle } from '~testing/wait-handle';
 import { API_URL } from '~utils/api-client';
 import { reportError } from '~utils/reportError';
@@ -36,7 +34,7 @@ afterAll(() => {
   server.close();
 });
 
-const renderDeleteModal = async () => {
+const renderDeleteModal = () => {
   const pet: PetListItem = {
     petId: 42,
     petName: 'Gosho',
@@ -47,19 +45,13 @@ const renderDeleteModal = async () => {
   const handleOnDeleted = jest.fn();
   const handleOnClose = jest.fn();
 
-  const store = createReduxStore();
-
-  await act(async () => {
-    await store.dispatch(fetchPetsData()).unwrap();
-  });
-
-  renderWithProviders(
+  render(
     <DeletePetModal
       pet={pet}
+      petKindsByValue={mockPetKindsByValue}
       onDeleted={handleOnDeleted}
       onClose={handleOnClose}
-    />,
-    { store }
+    />
   );
 
   return {
@@ -68,8 +60,8 @@ const renderDeleteModal = async () => {
   };
 };
 
-test('shows heading and pet data', async () => {
-  await renderDeleteModal();
+test('shows heading and pet data', () => {
+  renderDeleteModal();
 
   expect(
     screen.getByRole('dialog', { name: 'Delete pet modal' })
@@ -93,7 +85,7 @@ test('shows heading and pet data', async () => {
 test('onClose is called on cancel click', async () => {
   const user = userEvent.setup();
 
-  const { handleOnClose } = await renderDeleteModal();
+  const { handleOnClose } = renderDeleteModal();
 
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
@@ -116,7 +108,7 @@ test('delete pet endpoint is called on confirm click', async () => {
     })
   );
 
-  const { handleOnDeleted } = await renderDeleteModal();
+  const { handleOnDeleted } = renderDeleteModal();
 
   await user.click(screen.getByRole('button', { name: 'Confirm' }));
 
@@ -136,7 +128,7 @@ test('delete pet endpoint is called on confirm click', async () => {
 test('shows error when the delete call fails', async () => {
   const user = userEvent.setup();
 
-  const { handleOnDeleted } = await renderDeleteModal();
+  const { handleOnDeleted } = renderDeleteModal();
 
   const waitHandle = new WaitHandle();
 

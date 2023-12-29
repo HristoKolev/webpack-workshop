@@ -8,33 +8,16 @@ import {
   useState,
 } from 'react';
 
-import { useAppDispatch, useAppSelector } from '~redux/createReduxStore';
-import {
-  getPetThunk,
-  globalActions,
-  globalSelector,
-  savePetThunk,
-  selectedPetSelector,
-} from '~redux/globalSlice';
 import { ErrorIndicator } from '~shared/ErrorIndicator';
 import { LoadingIndicator } from '~shared/LoadingIndicator';
 import { Modal } from '~shared/Modal';
+import { createPet, getPet, updatePet } from '~utils/api-client';
 import { reportError } from '~utils/reportError';
-import type { Pet } from '~utils/server-data-model';
+import type { Pet, PetKind } from '~utils/server-data-model';
 
 import { DeletePetModal } from './DeletePetModal';
 
 import './EditPetModal.css';
-
-interface EditPetModalProps {
-  onClose?: () => void;
-
-  petId?: number;
-
-  onSaved?: () => void;
-
-  onDeleted?: () => void;
-}
 
 const getCurrentDate = (): string => {
   const now = new Date();
@@ -59,19 +42,38 @@ const getFormTitle = (
   return '';
 };
 
-export const EditPetModal = memo(
-  ({ petId, onSaved, onDeleted, onClose }: EditPetModalProps): JSX.Element => {
-    const dispatch = useAppDispatch();
-    const { petKinds } = useAppSelector(globalSelector);
-    const {
-      selectedPet,
-      selectedPetError,
-      selectedPetLoading,
-      savePetLoading,
-      savePetError,
-    } = useAppSelector(selectedPetSelector);
+interface EditPetModalProps {
+  onClose?: () => void;
 
+  petId: number | undefined;
+
+  onSaved?: () => void;
+
+  onDeleted?: () => void;
+
+  petKinds: PetKind[];
+
+  petKindsByValue: Map<number, string>;
+}
+
+export const EditPetModal = memo(
+  ({
+    petId,
+    onSaved,
+    onDeleted,
+    onClose,
+    petKinds,
+    petKindsByValue,
+  }: EditPetModalProps): JSX.Element => {
     const [editingEnabled, setEditingEnabled] = useState<boolean>(false);
+
+    const [selectedPetLoading, setSelectedPetLoading] =
+      useState<boolean>(false);
+    const [selectedPetError, setSelectedPetError] = useState<boolean>(false);
+    const [selectedPet, setSelectedPet] = useState<Pet | undefined>();
+
+    const [savePetLoading, setSavePetLoading] = useState<boolean>(false);
+    const [savePetError, setSavePetError] = useState<boolean>();
 
     const [petName, setPetName] = useState<string>('');
     const handleOnPetNameChange = useCallback(
@@ -141,27 +143,35 @@ export const EditPetModal = memo(
       void (async () => {
         if (petId) {
           try {
-            const pet = await dispatch(getPetThunk(petId)).unwrap();
+            setSelectedPetError(false);
+            setSelectedPetLoading(true);
+
+            const pet = await getPet(petId);
+            setSelectedPet(pet);
             fillForm(pet);
           } catch (error) {
             reportError(error);
+
+            setSelectedPetError(true);
+          } finally {
+            setSelectedPetLoading(false);
           }
         } else {
           fillForm({ addedDate: getCurrentDate() } as Pet);
           setEditingEnabled(true);
         }
       })().catch(reportError);
-    }, [petId, fillForm, dispatch]);
+    }, [petId, fillForm]);
 
     const handleOnCancelClick = useCallback(() => {
       if (selectedPet && editingEnabled) {
         fillForm(selectedPet);
         setEditingEnabled(false);
-        dispatch(globalActions.discardSaveError());
+        setSavePetError(false);
       } else {
         onClose?.();
       }
-    }, [selectedPet, fillForm, editingEnabled, onClose, dispatch]);
+    }, [selectedPet, fillForm, editingEnabled, onClose]);
 
     const handleOnEditClick = useCallback(() => {
       setEditingEnabled(true);
@@ -172,16 +182,33 @@ export const EditPetModal = memo(
     const handleOnSaveClick = useCallback(async () => {
       if (formRef.current?.reportValidity()) {
         try {
+          setSavePetLoading(true);
+          setSavePetError(false);
+
           const petData = readForm();
-          const updatedPet = await dispatch(savePetThunk(petData)).unwrap();
+
+          let updatedPet;
+
+          if (selectedPet) {
+            updatedPet = await updatePet(selectedPet.petId, petData);
+          } else {
+            updatedPet = await createPet(petData);
+          }
+
+          setSelectedPet(updatedPet);
           fillForm(updatedPet);
           setEditingEnabled(false);
+
           onSaved?.();
         } catch (error) {
           reportError(error);
+
+          setSavePetError(true);
+        } finally {
+          setSavePetLoading(false);
         }
       }
-    }, [formRef, readForm, fillForm, onSaved, dispatch]);
+    }, [formRef, readForm, fillForm, onSaved, selectedPet]);
 
     const [deletePet, setDeletePet] = useState<Pet | undefined>();
     const handleOnDeleteClick = useCallback(() => {
@@ -210,6 +237,7 @@ export const EditPetModal = memo(
             pet={deletePet}
             onClose={handleOnDeleteModalClose}
             onDeleted={handleOnDeleted}
+            petKindsByValue={petKindsByValue}
           />
         )}
         {selectedPetLoading && <LoadingIndicator text="Loading pet" />}
@@ -255,12 +283,12 @@ export const EditPetModal = memo(
                       Please, select a pet kind
                     </option>
                   )}
-                  {petKinds &&
-                    petKinds.map((petKind) => (
-                      <option value={petKind.value} key={petKind.value}>
-                        {petKind.displayName}
-                      </option>
-                    ))}
+
+                  {petKinds.map((petKind) => (
+                    <option value={petKind.value} key={petKind.value}>
+                      {petKind.displayName}
+                    </option>
+                  ))}
                 </select>
               </label>
 

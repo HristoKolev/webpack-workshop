@@ -1,14 +1,9 @@
-import { type JSX, memo, useCallback } from 'react';
+import { type JSX, memo, useCallback, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '~redux/createReduxStore';
-import {
-  deletePetStateSelector,
-  deletePetThunk,
-  globalSelector,
-} from '~redux/globalSlice';
 import { ErrorIndicator } from '~shared/ErrorIndicator';
 import { LoadingIndicator } from '~shared/LoadingIndicator';
 import { Modal } from '~shared/Modal';
+import { deletePet } from '~utils/api-client';
 import { reportError } from '~utils/reportError';
 import type { PetListItem } from '~utils/server-data-model';
 
@@ -20,27 +15,40 @@ interface DeletePetModalProps {
   pet: PetListItem;
 
   onDeleted?: () => void;
+
+  petKindsByValue: Map<number, string>;
 }
 
 export const DeletePetModal = memo(
-  ({ onClose, onDeleted, pet }: DeletePetModalProps): JSX.Element => {
-    const dispatch = useAppDispatch();
-    const { petKindsByValue } = useAppSelector(globalSelector);
-    const { deleteLoading, deleteError } = useAppSelector(
-      deletePetStateSelector
-    );
+  ({
+    onClose,
+    onDeleted,
+    pet,
+    petKindsByValue,
+  }: DeletePetModalProps): JSX.Element => {
+    const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+    const [deleteError, setDeleteError] = useState<boolean>(false);
 
     const handleOnClose = useCallback(() => onClose?.(), [onClose]);
 
-    const handleOnConfirmClick = useCallback(async () => {
-      try {
-        await dispatch(deletePetThunk(pet.petId)).unwrap();
-        onClose?.();
-        onDeleted?.();
-      } catch (error) {
-        reportError(error);
-      }
-    }, [onClose, onDeleted, pet.petId, dispatch]);
+    const handleOnConfirmClick = useCallback(() => {
+      void (async () => {
+        setDeleteLoading(true);
+        setDeleteError(false);
+
+        try {
+          await deletePet(pet.petId);
+          onClose?.();
+          onDeleted?.();
+        } catch (error) {
+          reportError(error);
+
+          setDeleteError(true);
+        } finally {
+          setDeleteLoading(false);
+        }
+      })().catch(reportError);
+    }, [onClose, onDeleted, pet.petId]);
 
     return (
       <Modal
@@ -68,7 +76,7 @@ export const DeletePetModal = memo(
             className="delete-pet-modal-list-item"
             data-testid="delete-modal_petKind"
           >
-            Pet Kind: {petKindsByValue?.[pet.kind]?.displayName || ''}
+            Pet Kind: {petKindsByValue.get(pet.kind) || ''}
           </div>
         </div>
 
