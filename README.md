@@ -559,14 +559,16 @@ npm i -D eslint-plugin-eslint-comments
 npm i -D eslint-import-resolver-alias
 npm i -D eslint-plugin-jest
 npm i -D eslint-plugin-testing-library
+npm i -D rimraf
 ```
 
 - Copy the contents of the `extra/12-eslint` directory to the root directory of this workshop.
 
-- Add the `lint` and `lint:fix` npm scripts to `package.json`
+- Add the `lint`, `lint:clean-cache` and `lint:fix` npm scripts to `package.json`
 
 ```
 "lint": "eslint ./ --cache --cache-location ./node_modules/.cache/eslint/ --max-warnings 0",
+"lint:clean-cache": "rimraf ./node_modules/.cache/eslint/",
 "lint:fix": "npm run lint -- --fix"
 ```
 
