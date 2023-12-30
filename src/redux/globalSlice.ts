@@ -147,7 +147,6 @@ export const globalSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPetsData.pending, (state) => {
-      state.petKindsByValue = undefined;
       state.isLoading = true;
       state.isError = false;
     });
