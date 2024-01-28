@@ -19,8 +19,8 @@
     "skipLibCheck": true,
     "paths": {
       "~*": ["src/*"],
-      "src/*": ["src/*"]
-    }
+      "src/*": ["src/*"],
+    },
   },
-  "include": ["src", "__mocks__", "setupTests.ts"]
+  "include": ["src", "__mocks__", "setupTests.ts"],
 }
