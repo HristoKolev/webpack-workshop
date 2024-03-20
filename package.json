@@ -84,5 +84,10 @@
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
+  },
+  "overrides": {
+    "@pmmmwh/react-refresh-webpack-plugin": {
+      "webpack-dev-server": "^5"
+    }
   }
 }
