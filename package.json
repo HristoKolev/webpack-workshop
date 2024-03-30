@@ -9,8 +9,7 @@
     "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json",
     "format": "prettier --cache --write .",
     "format-check": "prettier --cache --check .",
-    "lint": "eslint ./ --cache --cache-location ./node_modules/.cache/eslint/ --max-warnings 0",
-    "lint:clean-cache": "rimraf ./node_modules/.cache/eslint/",
+    "lint": "eslint ./ --max-warnings 0",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
