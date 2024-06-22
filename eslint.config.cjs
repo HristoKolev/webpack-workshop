@@ -1,5 +1,4 @@
 const noDestructuringArraysAsObjects = require('@arabasta/eslint-plugin-no-destructuring-arrays-as-objects');
-const reduxUseAppFunctions = require('@arabasta/eslint-plugin-redux-use-app-functions');
 const reportCaughtError = require('@arabasta/eslint-plugin-report-caught-error');
 const requireUseeffectDependencyArray = require('@arabasta/eslint-plugin-require-useeffect-dependency-array');
 const { FlatCompat } = require('@eslint/eslintrc');
@@ -32,7 +31,6 @@ module.exports = tseslint.config(
   eslint.configs.recommended,
   requireUseeffectDependencyArray.configs.recommended,
   reportCaughtError.configs.recommended,
-  reduxUseAppFunctions.configs.recommended,
   ...compat.extends('plugin:react/recommended'),
   ...compat.extends('plugin:react-hooks/recommended'),
   eslintComments.recommended,
