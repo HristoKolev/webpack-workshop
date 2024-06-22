@@ -13,7 +13,7 @@ import { PetList } from './pages/PetList';
 import { ErrorIndicator } from './shared/ErrorIndicator';
 import { LoadingIndicator } from './shared/LoadingIndicator';
 import { getPetKinds, getPetList } from './utils/api-client';
-import { reportError } from './utils/reportError';
+import { reportUnknownError } from './utils/reportUnknownError';
 import type { PetKind, PetListItem } from './utils/server-data-model';
 
 import './App.css';
@@ -57,7 +57,7 @@ export const App = memo((): JSX.Element => {
       setPetList(petItems);
       setPetListById(listById);
     } catch (error) {
-      reportError(error);
+      reportUnknownError(error);
 
       setFetchError(true);
     } finally {
@@ -66,19 +66,20 @@ export const App = memo((): JSX.Element => {
   }, [petKindsFetchedRef]);
 
   useEffect(() => {
-    fetchListData().catch(reportError);
+    fetchListData().catch(reportUnknownError);
   }, [fetchListData]);
 
   const [deletePet, setDeletePet] = useState<PetListItem | undefined>();
   const handleOnDeleteClick = useCallback(
-    (petId: number) => setDeletePet(petListById?.get(petId)),
+    (petId: number) => {
+      setDeletePet(petListById?.get(petId));
+    },
     [petListById]
   );
 
-  const handleOnDeleteModalClose = useCallback(
-    () => setDeletePet(undefined),
-    []
-  );
+  const handleOnDeleteModalClose = useCallback(() => {
+    setDeletePet(undefined);
+  }, []);
 
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [editPetId, setEditPetId] = useState<number | undefined>();

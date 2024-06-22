@@ -16,7 +16,7 @@ import { BASE_URL } from '~utils/api-client';
 
 import { EditPetModal } from './EditPetModal';
 
-jest.mock('../utils/reportError');
+jest.mock('../utils/reportUnknownError');
 
 const server = setupServer(...defaultHandlers);
 

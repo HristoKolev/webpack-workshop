@@ -14,7 +14,7 @@ import { defaultHandlers, defaultWaitHandles } from './testing/utils';
 import { WaitHandle } from './testing/wait-handle';
 import { BASE_URL } from './utils/api-client';
 
-jest.mock('./utils/reportError');
+jest.mock('./utils/reportUnknownError');
 
 const server = setupServer(...defaultHandlers);
 

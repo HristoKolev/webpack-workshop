@@ -12,7 +12,7 @@ import { ErrorIndicator } from '~shared/ErrorIndicator';
 import { LoadingIndicator } from '~shared/LoadingIndicator';
 import { Modal } from '~shared/Modal';
 import { createPet, getPet, updatePet } from '~utils/api-client';
-import { reportError } from '~utils/reportError';
+import { reportUnknownError } from '~utils/reportUnknownError';
 import type { Pet, PetKind } from '~utils/server-data-model';
 
 import { DeletePetModal } from './DeletePetModal';
@@ -150,7 +150,7 @@ export const EditPetModal = memo(
             setSelectedPet(pet);
             fillForm(pet);
           } catch (error) {
-            reportError(error);
+            reportUnknownError(error);
 
             setSelectedPetError(true);
           } finally {
@@ -160,7 +160,7 @@ export const EditPetModal = memo(
           fillForm({ addedDate: getCurrentDate() } as Pet);
           setEditingEnabled(true);
         }
-      })().catch(reportError);
+      })().catch(reportUnknownError);
     }, [petId, fillForm]);
 
     const handleOnCancelClick = useCallback(() => {
@@ -201,7 +201,7 @@ export const EditPetModal = memo(
 
           onSaved?.();
         } catch (error) {
-          reportError(error);
+          reportUnknownError(error);
 
           setSavePetError(true);
         } finally {

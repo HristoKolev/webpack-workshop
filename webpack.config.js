@@ -93,6 +93,8 @@ module.exports = {
     }),
     new ESLintPlugin({
       extensions: ['js', 'jsx', 'ts', 'tsx'],
+      configType: 'flat',
+      eslintPath: 'eslint/use-at-your-own-risk',
       failOnWarning: true,
     }),
     ...(process.env.NODE_ENV === 'production'
