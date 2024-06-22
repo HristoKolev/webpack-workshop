@@ -14,13 +14,10 @@ export const createReduxStore = () =>
     },
   });
 
-export type ReduxStoreType = ReturnType<typeof createReduxStore>;
+export type ReduxStore = ReturnType<typeof createReduxStore>;
+export type ReduxState = ReturnType<ReduxStore['getState']>;
+export type AppDispatch = ReduxStore['dispatch'];
 
-export type ReduxState = ReturnType<
-  ReturnType<typeof createReduxStore>['getState']
->;
-
-export const useAppDispatch = () =>
-  useDispatch<ReturnType<typeof createReduxStore>['dispatch']>();
-
+// eslint-disable-next-line @arabasta/redux-use-app-functions/use-app-dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<ReduxState> = useSelector;

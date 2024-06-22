@@ -7,14 +7,14 @@ import { HttpResponse, type RequestHandler, http } from 'msw';
 import type { ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
-import { type ReduxStoreType, createReduxStore } from '~redux/createReduxStore';
+import { type ReduxStore, createReduxStore } from '~redux/createReduxStore';
 import { createWaitHandleCollection } from '~testing/wait-handle';
 import { BASE_URL } from '~utils/api-client';
 
 import { mockPetKinds, mockPetList } from './mock-data';
 
 type ExtendedRenderOptions = Omit<RenderOptions, 'queries'> & {
-  store?: ReduxStoreType;
+  store?: ReduxStore;
 };
 
 export const renderWithProviders = (

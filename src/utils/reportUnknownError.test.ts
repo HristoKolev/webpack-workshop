@@ -1,4 +1,4 @@
-import { reportError } from './reportError';
+import { reportUnknownError } from './reportUnknownError';
 
 test('logs the error to the console', () => {
   // eslint-disable-next-line no-console
@@ -6,7 +6,7 @@ test('logs the error to the console', () => {
 
   const error = new Error('test error');
 
-  reportError(error);
+  reportUnknownError(error);
 
   // eslint-disable-next-line no-console
   expect(console.error).toHaveBeenCalledWith(error);

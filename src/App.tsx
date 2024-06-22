@@ -36,13 +36,14 @@ export const App = memo((): JSX.Element => {
 
   const [deletePet, setDeletePet] = useState<PetListItem | undefined>();
   const handleOnDeleteClick = useCallback(
-    (petId: number) => setDeletePet(petListById?.[petId]),
+    (petId: number) => {
+      setDeletePet(petListById?.[petId]);
+    },
     [petListById]
   );
-  const handleOnDeleteModalClose = useCallback(
-    () => setDeletePet(undefined),
-    []
-  );
+  const handleOnDeleteModalClose = useCallback(() => {
+    setDeletePet(undefined);
+  }, []);
 
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 

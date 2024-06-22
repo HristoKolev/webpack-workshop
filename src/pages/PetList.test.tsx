@@ -5,7 +5,7 @@ import { mockPetKindsByValue, mockPetList } from '~testing/mock-data';
 
 import { PetList } from './PetList';
 
-jest.mock('../utils/reportError');
+jest.mock('../utils/reportUnknownError');
 
 afterEach(() => {
   jest.restoreAllMocks();

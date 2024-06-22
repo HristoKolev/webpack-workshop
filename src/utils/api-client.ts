@@ -1,4 +1,4 @@
-import { reportError } from '~utils/reportError';
+import { reportUnknownError } from '~utils/reportUnknownError';
 
 import type { Pet, PetKind, PetListItem } from './server-data-model';
 
@@ -9,7 +9,9 @@ export const fetchJSON = async <T>(
   httpRequest: RequestInit & { url: string }
 ) => {
   const ac = new AbortController();
-  const timeoutId = setTimeout(() => ac.abort(), REQUEST_TIMEOUT);
+  const timeoutId = setTimeout(() => {
+    ac.abort();
+  }, REQUEST_TIMEOUT);
 
   let httpResponse;
   try {
@@ -30,7 +32,7 @@ export const fetchJSON = async <T>(
   try {
     return (await httpResponse.json()) as T;
   } catch (error) {
-    reportError(error);
+    reportUnknownError(error);
     throw new Error(
       `Failed to parse JSON from ${httpRequest.method} ${httpRequest.url}`
     );

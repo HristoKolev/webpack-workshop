@@ -9,7 +9,7 @@ import {
 import { ErrorIndicator } from '~shared/ErrorIndicator';
 import { LoadingIndicator } from '~shared/LoadingIndicator';
 import { Modal } from '~shared/Modal';
-import { reportError } from '~utils/reportError';
+import { reportUnknownError } from '~utils/reportUnknownError';
 import type { PetListItem } from '~utils/server-data-model';
 
 import './DeletePetModal.css';
@@ -38,7 +38,7 @@ export const DeletePetModal = memo(
         onClose?.();
         onDeleted?.();
       } catch (error) {
-        reportError(error);
+        reportUnknownError(error);
       }
     }, [onClose, onDeleted, pet.petId, dispatch]);
 
