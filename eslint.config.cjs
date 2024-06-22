@@ -1,37 +1,34 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-import noDestructuringArraysAsObjects from '@arabasta/eslint-plugin-no-destructuring-arrays-as-objects';
-import reduxUseAppFunctions from '@arabasta/eslint-plugin-redux-use-app-functions';
-import reportCaughtError from '@arabasta/eslint-plugin-report-caught-error';
-import requireUseeffectDependencyArray from '@arabasta/eslint-plugin-require-useeffect-dependency-array';
-import { FlatCompat } from '@eslint/eslintrc';
-import eslint from '@eslint/js';
-import eslintComments from '@eslint-community/eslint-plugin-eslint-comments/configs';
-import confusingBrowserGlobals from 'confusing-browser-globals';
-import prettier from 'eslint-config-prettier';
-import deprecation from 'eslint-plugin-deprecation';
-import es from 'eslint-plugin-es';
-import importlint from 'eslint-plugin-import';
-import jest from 'eslint-plugin-jest';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
-import newWithError from 'eslint-plugin-new-with-error';
-import reactLint from 'eslint-plugin-react';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import unusedImports from 'eslint-plugin-unused-imports';
-import globals from 'globals';
+const noDestructuringArraysAsObjects = require('@arabasta/eslint-plugin-no-destructuring-arrays-as-objects');
+const reduxUseAppFunctions = require('@arabasta/eslint-plugin-redux-use-app-functions');
+const reportCaughtError = require('@arabasta/eslint-plugin-report-caught-error');
+const requireUseeffectDependencyArray = require('@arabasta/eslint-plugin-require-useeffect-dependency-array');
+const { FlatCompat } = require('@eslint/eslintrc');
+const eslint = require('@eslint/js');
+const eslintComments = require('@eslint-community/eslint-plugin-eslint-comments/configs');
+const confusingBrowserGlobals = require('confusing-browser-globals');
+const prettier = require('eslint-config-prettier');
+const deprecation = require('eslint-plugin-deprecation');
+const es = require('eslint-plugin-es');
+const importlint = require('eslint-plugin-import');
+const jest = require('eslint-plugin-jest');
+const jsxA11y = require('eslint-plugin-jsx-a11y');
+const newWithError = require('eslint-plugin-new-with-error');
+const reactLint = require('eslint-plugin-react');
+const reactRefresh = require('eslint-plugin-react-refresh');
+const unusedImports = require('eslint-plugin-unused-imports');
+const globals = require('globals');
 // eslint-disable-next-line import/no-unresolved
-import tseslint from 'typescript-eslint';
+const tseslint = require('typescript-eslint');
 
 const compat = new FlatCompat({
-  baseDirectory: path.dirname(fileURLToPath(import.meta.url)),
+  baseDirectory: __dirname,
 });
 
 // The tseslint.config function is a variadic identity function which is a fancy way of saying
 // that it's a function with a spread argument that accepts any number flat config objects
 // and returns the objects unchanged. It exists as a way to quickly and easily provide
 // types for your flat config file without the need for JSDoc type comments.
-export default tseslint.config(
+module.exports = tseslint.config(
   eslint.configs.recommended,
   requireUseeffectDependencyArray.configs.recommended,
   reportCaughtError.configs.recommended,
@@ -1262,7 +1259,7 @@ export default tseslint.config(
   },
   {
     name: 'Root level .js/.ts configuration files',
-    files: ['*.js', '*.ts', '__mocks__/**/*.[j|t]s?(x)'],
+    files: ['*.js', '*.cjs', '*.ts', '__mocks__/**/*.[j|t]s?(x)'],
     languageOptions: {
       globals: {
         ...globals.node,
