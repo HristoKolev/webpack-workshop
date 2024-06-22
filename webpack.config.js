@@ -26,7 +26,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
   },
-  devtool: 'source-map',
   devServer: {
     port: 3000,
     open: true,
@@ -35,6 +34,7 @@ module.exports = {
   stats: {
     errorDetails: true,
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -79,6 +79,17 @@ module.exports = {
       inject: 'body',
       template: 'src/index.html',
     }),
+    ...(process.env.NODE_ENV === 'production'
+      ? [
+          new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css',
+          }),
+        ]
+      : []),
+    ...(process.env.NODE_ENV === 'development'
+      ? [new ReactRefreshWebpackPlugin()]
+      : []),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [{ from: 'public' }],
@@ -93,20 +104,9 @@ module.exports = {
     }),
     new ESLintPlugin({
       extensions: ['js', 'jsx', 'ts', 'tsx'],
+      failOnWarning: true,
       configType: 'flat',
       eslintPath: 'eslint/use-at-your-own-risk',
-      failOnWarning: true,
     }),
-    ...(process.env.NODE_ENV === 'production'
-      ? [
-          new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
-            chunkFilename: '[id].[contenthash].css',
-          }),
-        ]
-      : []),
-    ...(process.env.NODE_ENV === 'development'
-      ? [new ReactRefreshWebpackPlugin()]
-      : []),
   ],
 };
