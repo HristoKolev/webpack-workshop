@@ -10,7 +10,7 @@ export const App = (): JSX.Element => {
     fetch('http://localhost:3001/')
       .then((res) => res.text())
       .then(setMessage)
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console, @typescript-eslint/use-unknown-in-catch-callback-variable
       .catch(console.error);
   }, []);
 
