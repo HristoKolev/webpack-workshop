@@ -328,7 +328,7 @@ npm run build
 - Install the packages
 
 ```shell
-npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
+npm i -D typescript^5.4.5 @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
 ```
 
 - Copy the contents of the `extra/08-typescript` directory to the root directory of this workshop.
@@ -472,7 +472,7 @@ npm run profile
 ```shell
 npm i -D @testing-library/dom @testing-library/react
 npm i -D @testing-library/user-event @testing-library/jest-dom
-npm i -D jest jest-environment-jsdom
+npm i -D jest @types/jest jest-environment-jsdom
 npm i -D msw undici
 ```
 
@@ -541,7 +541,7 @@ npm run format
 - Install the packages
 
 ```shell
-npm i -D eslint
+npm i -D eslint@8
 npm i -D @eslint/eslintrc
 npm i -D @eslint/js
 npm i -D eslint-config-prettier
@@ -556,14 +556,14 @@ npm i -D eslint-plugin-react
 npm i -D eslint-plugin-react-hooks
 npm i -D eslint-plugin-react-refresh
 npm i -D eslint-plugin-testing-library
-npm i -D eslint-plugin-unused-imports
+npm i -D eslint-plugin-unused-imports@3
 npm i -D eslint-plugin-jest
 npm i -D @arabasta/eslint-plugin-no-destructuring-arrays-as-objects
-npm i -D @arabasta/eslint-plugin-no-testing-library-without-cleanup
 npm i -D @arabasta/eslint-plugin-report-caught-error
 npm i -D @arabasta/eslint-plugin-require-useeffect-dependency-array
 npm i -D @eslint-community/eslint-plugin-eslint-comments
 npm i -D confusing-browser-globals
+npm i -D typescript-eslint
 npm i -D rimraf
 npm i -D globals
 ```
@@ -599,6 +599,8 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 new ESLintPlugin({
   extensions: ['js', 'jsx', 'ts', 'tsx'],
   failOnWarning: true,
+  configType: 'flat',
+  eslintPath: 'eslint/use-at-your-own-risk',
 }),
 ```
 

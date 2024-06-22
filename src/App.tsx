@@ -1,4 +1,4 @@
-import { useEffect, useState, JSX } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 
 import { formatDate } from '~helpers';
 import logoUrl from '~logo.png';
@@ -16,7 +16,7 @@ export const App = (): JSX.Element => {
 
   return (
     <div className="text">
-      <div>Hello Webpack</div>
+      <div className="text-center">Hello Webpack</div>
       <div data-testid="date-label">{formatDate(new Date())}</div>
       {message && <div data-testid="server-message">{message}</div>}
       <div>
