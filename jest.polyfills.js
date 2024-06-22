@@ -1,4 +1,5 @@
-// jest.polyfills.js
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable import/order */
 /**
  * @note The block below contains polyfills for Node.js globals
  * required for Jest to function when running JSDOM tests.
@@ -9,22 +10,24 @@
  * you don't want to deal with this.
  */
 
-// eslint-disable-next-line import/order
+const { ReadableStream, TransformStream } = require('node:stream/web');
 const { TextDecoder, TextEncoder } = require('node:util');
 
-Object.defineProperties(global, {
+Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder },
   TextEncoder: { value: TextEncoder },
+  ReadableStream: { value: ReadableStream },
+  TransformStream: { value: TransformStream },
 });
 
-// eslint-disable-next-line import/order
-const { Blob } = require('node:buffer');
+const { Blob, File } = require('node:buffer');
 
 const { fetch, Headers, FormData, Request, Response } = require('undici');
 
-Object.defineProperties(global, {
+Object.defineProperties(globalThis, {
   fetch: { value: fetch, writable: true },
   Blob: { value: Blob },
+  File: { value: File },
   Headers: { value: Headers },
   FormData: { value: FormData },
   Request: { value: Request },
