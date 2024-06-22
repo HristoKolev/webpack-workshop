@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
