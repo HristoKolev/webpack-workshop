@@ -570,17 +570,24 @@ npm i -D globals
 
 - Copy the contents of the `extra/12-eslint` directory to the root directory of this workshop.
 
-- Add the `lint` and `lint:fix` npm scripts to `package.json`
+- Add the npm scripts to `package.json`
 
 ```
 "lint": "eslint ./ --max-warnings 0",
-"lint:fix": "npm run lint -- --fix"
+"lint:fix": "npm run lint -- --fix",
+"generate-eslint-resolved-configs": "rimraf ./eslint-resolved-configs && node generate-eslint-resolved-configs.js && npm run format"
 ```
 
 - Run the `lint:fix` npm script
 
 ```shell
 npm run lint:fix
+```
+
+- Run the `generate-eslint-resolved-configs` npm script
+
+```shell
+npm run generate-eslint-resolved-configs
 ```
 
 - Install the webpack plugin

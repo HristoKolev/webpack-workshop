@@ -10,6 +10,7 @@
     "format-check": "prettier --cache --check .",
     "lint": "eslint ./ --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
+    "generate-eslint-resolved-configs": "rimraf ./eslint-resolved-configs && node generate-eslint-resolved-configs.js && npm run format",
     "profile": "cross-env NODE_ENV=production webpack --profile --json=./dist/profile.json && webpack-bundle-analyzer ./dist/profile.json"
   },
   "dependencies": {
