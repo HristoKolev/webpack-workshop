@@ -7,6 +7,7 @@ module.exports = {
         corejs: '3.37',
       },
     ],
+    '@babel/preset-typescript',
   ],
   plugins: [
     [

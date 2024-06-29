@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const styleLoader = {
   loader:
@@ -14,7 +15,10 @@ const styleLoader = {
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './src/main.js',
+  entry: './src/main.ts',
+  resolve: {
+    extensions: ['.js', '.ts' ],
+  },
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
@@ -39,7 +43,7 @@ module.exports = {
         type: 'asset',
       },
       {
-        test: /\.js$/,
+        test: /\.[jt]s$/,
         use: [{ loader: 'babel-loader' }],
         exclude: /node_modules/,
       },
@@ -54,6 +58,14 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [{ from: 'public' }],
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+      },
     }),
     ...(process.env.NODE_ENV === 'production'
         ? [
