@@ -8,6 +8,7 @@ module.exports = {
       },
     ],
     '@babel/preset-typescript',
+    ['@babel/preset-react', { runtime: 'automatic' }],
   ],
   plugins: [
     [
@@ -20,5 +21,6 @@ module.exports = {
         },
       },
     ],
+    ...(process.env.NODE_ENV === 'development' ? ['react-refresh/babel'] : []),
   ],
 };

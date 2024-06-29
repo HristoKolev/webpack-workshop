@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const styleLoader = {
   loader:
@@ -15,9 +16,9 @@ const styleLoader = {
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './src/main.ts',
+  entry: './src/main.tsx',
   resolve: {
-    extensions: ['.js', '.ts' ],
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -43,7 +44,7 @@ module.exports = {
         type: 'asset',
       },
       {
-        test: /\.[jt]s$/,
+        test: /\.[jt]sx?$/,
         use: [{ loader: 'babel-loader' }],
         exclude: /node_modules/,
       },
@@ -74,6 +75,9 @@ module.exports = {
             chunkFilename: '[id].[contenthash].css',
           }),
         ]
+        : []),
+    ...(process.env.NODE_ENV === 'development'
+        ? [new ReactRefreshWebpackPlugin()]
         : []),
   ],
 };
