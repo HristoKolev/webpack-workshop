@@ -219,7 +219,7 @@ new CopyWebpackPlugin({
 
 - Copy the contents of the `extra/04-dev-and-production-builds` directory to the root directory of this workshop.
 
-- Modify `index.html` and to this line to the `head` tag
+- Add the icon link to the `head` tag in `index.html`
 
 ```html
 <link rel="icon" href="/favicon.ico" />
@@ -328,7 +328,7 @@ npm run build
 - Install the packages
 
 ```shell
-npm i -D typescript^5.4.5 @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
+npm i -D typescript@5.4.* @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
 ```
 
 - Copy the contents of the `extra/08-typescript` directory to the root directory of this workshop.
@@ -442,7 +442,9 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
     ```
   - change the resolve.extensions setting
     ```
-      extensions: ['.js', '.ts', '.jsx', '.tsx'],
+      resolve: {
+        extensions: ['.js', '.ts', '.jsx', '.tsx'],
+      },
     ```
 
 - Add the `#root` div element to the `body` tag in `src/index.html`

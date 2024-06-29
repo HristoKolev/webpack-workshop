@@ -1,6 +1,6 @@
 import { type JSX, useEffect, useState } from 'react';
 
-import { formatDate } from '~helpers';
+import { formatDate } from 'src/helpers';
 import logoUrl from '~logo.png';
 
 export const App = (): JSX.Element => {
