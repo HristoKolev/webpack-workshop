@@ -219,7 +219,7 @@ new CopyWebpackPlugin({
 
 - Copy the contents of the `extra/04-dev-and-production-builds` directory to the root directory of this workshop.
 
-- Modify `index.html` and to this line to the `head` tag
+- Modify `index.html` and add this line to the `head` tag
 
 ```html
 <link rel="icon" href="/favicon.ico" />
