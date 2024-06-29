@@ -1,5 +1,5 @@
-import { formatDate } from './helpers';
-import logoUrl from './logo.png';
+import { formatDate } from 'src/helpers';
+import logoUrl from '~logo.png';
 
 import './main.css';
 

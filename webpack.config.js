@@ -38,6 +38,11 @@ module.exports = {
         test: /\.(ico|gif|png|jpg|jpeg|svg|woff|woff2|eot|ttf|otf)$/i,
         type: 'asset',
       },
+      {
+        test: /\.js$/,
+        use: [{ loader: 'babel-loader' }],
+        exclude: /node_modules/,
+      },
     ],
   },
   plugins: [
