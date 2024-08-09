@@ -40,6 +40,9 @@
       "addEventListener": false,
       "afterAll": false,
       "afterEach": false,
+      "ai": false,
+      "AI": false,
+      "AITextSession": false,
       "alert": false,
       "AnalyserNode": false,
       "Animation": false,
@@ -115,6 +118,7 @@
       "CDATASection": false,
       "ChannelMergerNode": false,
       "ChannelSplitterNode": false,
+      "ChapterInformation": false,
       "CharacterBoundsUpdateEvent": false,
       "CharacterData": false,
       "clearImmediate": false,
@@ -180,6 +184,7 @@
       "CSSNamespaceRule": false,
       "CSSNumericArray": false,
       "CSSNumericValue": false,
+      "CSSPageDescriptors": false,
       "CSSPageRule": false,
       "CSSPerspective": false,
       "CSSPositionTryDescriptors": false,
@@ -300,6 +305,7 @@
       "FileSystemWritableFileStream": false,
       "find": false,
       "fit": false,
+      "Float16Array": false,
       "Float32Array": false,
       "Float64Array": false,
       "focus": false,
@@ -1219,7 +1225,7 @@
       "XSLTProcessor": false,
       "xtest": false
     },
-    "parser": "typescript-eslint/parser@7.13.1",
+    "parser": "typescript-eslint/parser@8.0.1",
     "parserOptions": {
       "ecmaFeatures": {
         "jsx": true,
@@ -1237,7 +1243,7 @@
     "@arabasta/report-caught-error:@arabasta/eslint-plugin-report-caught-error@1.0.6",
     "@arabasta/require-useeffect-dependency-array:@arabasta/eslint-plugin-require-useeffect-dependency-array@1.0.9",
     "@eslint-community/eslint-comments:@eslint-community/eslint-plugin-eslint-comments@4.3.0",
-    "@typescript-eslint:@typescript-eslint/eslint-plugin@7.13.1",
+    "@typescript-eslint:@typescript-eslint/eslint-plugin@8.0.1",
     "deprecation:eslint-plugin-deprecation@3.0.0",
     "es",
     "import",
@@ -1273,7 +1279,6 @@
         "minimumDescriptionLength": 10
       }
     ],
-    "@typescript-eslint/ban-types": ["error"],
     "@typescript-eslint/block-spacing": ["off"],
     "@typescript-eslint/brace-style": ["off"],
     "@typescript-eslint/comma-dangle": ["off"],
@@ -1315,6 +1320,7 @@
     "@typescript-eslint/no-duplicate-enum-values": ["error"],
     "@typescript-eslint/no-duplicate-type-constituents": ["error"],
     "@typescript-eslint/no-dynamic-delete": ["error"],
+    "@typescript-eslint/no-empty-object-type": ["error"],
     "@typescript-eslint/no-explicit-any": ["error"],
     "@typescript-eslint/no-extra-non-null-assertion": ["error"],
     "@typescript-eslint/no-extra-parens": ["off"],
@@ -1326,7 +1332,6 @@
     "@typescript-eslint/no-import-type-side-effects": ["error"],
     "@typescript-eslint/no-invalid-void-type": ["error"],
     "@typescript-eslint/no-loop-func": ["error"],
-    "@typescript-eslint/no-loss-of-precision": ["error"],
     "@typescript-eslint/no-magic-numbers": ["off"],
     "@typescript-eslint/no-meaningless-void-operator": ["error"],
     "@typescript-eslint/no-misused-new": ["error"],
@@ -1343,6 +1348,7 @@
     "@typescript-eslint/no-non-null-assertion": ["off"],
     "@typescript-eslint/no-redeclare": ["error"],
     "@typescript-eslint/no-redundant-type-constituents": ["error"],
+    "@typescript-eslint/no-require-imports": ["error"],
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-this-alias": ["error"],
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": ["error"],
@@ -1351,13 +1357,16 @@
     "@typescript-eslint/no-unnecessary-type-arguments": ["error"],
     "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
     "@typescript-eslint/no-unnecessary-type-constraint": ["error"],
+    "@typescript-eslint/no-unnecessary-type-parameters": ["error"],
     "@typescript-eslint/no-unsafe-argument": ["error"],
     "@typescript-eslint/no-unsafe-assignment": ["error"],
     "@typescript-eslint/no-unsafe-call": ["error"],
     "@typescript-eslint/no-unsafe-declaration-merging": ["error"],
     "@typescript-eslint/no-unsafe-enum-comparison": ["error"],
+    "@typescript-eslint/no-unsafe-function-type": ["error"],
     "@typescript-eslint/no-unsafe-member-access": ["error"],
     "@typescript-eslint/no-unsafe-return": ["error"],
+    "@typescript-eslint/no-unsafe-unary-minus": ["error"],
     "@typescript-eslint/no-unused-expressions": [
       "error",
       {
@@ -1384,12 +1393,12 @@
       }
     ],
     "@typescript-eslint/no-useless-constructor": ["error"],
-    "@typescript-eslint/no-var-requires": ["error"],
+    "@typescript-eslint/no-wrapper-object-types": ["error"],
     "@typescript-eslint/object-curly-spacing": ["off"],
     "@typescript-eslint/only-throw-error": ["error"],
     "@typescript-eslint/prefer-as-const": ["error"],
-    "@typescript-eslint/prefer-includes": ["error"],
     "@typescript-eslint/prefer-literal-enum-member": ["error"],
+    "@typescript-eslint/prefer-namespace-keyword": ["error"],
     "@typescript-eslint/prefer-nullish-coalescing": ["off"],
     "@typescript-eslint/prefer-promise-reject-errors": ["error"],
     "@typescript-eslint/prefer-reduce-type-parameter": ["error"],
@@ -2026,7 +2035,7 @@
     "no-lone-blocks": ["error"],
     "no-lonely-if": ["error"],
     "no-loop-func": ["error"],
-    "no-loss-of-precision": ["off"],
+    "no-loss-of-precision": ["error"],
     "no-magic-numbers": ["off"],
     "no-misleading-character-class": ["error"],
     "no-mixed-operators": ["off"],
@@ -2280,12 +2289,11 @@
       }
     ],
     "no-unused-expressions": [
-      "error",
+      "off",
       {
         "allowShortCircuit": false,
         "allowTernary": false,
-        "allowTaggedTemplates": false,
-        "enforceForJSX": false
+        "allowTaggedTemplates": false
       }
     ],
     "no-unused-labels": ["error"],
