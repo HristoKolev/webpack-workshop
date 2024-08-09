@@ -328,7 +328,7 @@ npm run build
 - Install the packages
 
 ```shell
-npm i -D typescript@5.4.* @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
+npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
 ```
 
 - Copy the contents of the `extra/08-typescript` directory to the root directory of this workshop.
