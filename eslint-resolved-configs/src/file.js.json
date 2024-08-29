@@ -1236,7 +1236,7 @@
     "@arabasta/redux-use-app-functions:@arabasta/eslint-plugin-redux-use-app-functions@1.0.5",
     "@arabasta/report-caught-error:@arabasta/eslint-plugin-report-caught-error@1.0.6",
     "@arabasta/require-useeffect-dependency-array:@arabasta/eslint-plugin-require-useeffect-dependency-array@1.0.9",
-    "@eslint-community/eslint-comments:@eslint-community/eslint-plugin-eslint-comments@4.3.0",
+    "@eslint-community/eslint-comments:@eslint-community/eslint-plugin-eslint-comments@4.4.0",
     "es",
     "import",
     "jsx-a11y:eslint-plugin-jsx-a11y@6.9.0",
