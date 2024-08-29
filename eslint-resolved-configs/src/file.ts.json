@@ -1225,7 +1225,7 @@
       "XSLTProcessor": false,
       "xtest": false
     },
-    "parser": "typescript-eslint/parser@8.0.1",
+    "parser": "typescript-eslint/parser@8.3.0",
     "parserOptions": {
       "ecmaFeatures": {
         "jsx": true,
@@ -1242,8 +1242,8 @@
     "@arabasta/no-destructuring-arrays-as-objects:@arabasta/eslint-plugin-no-testing-library-without-cleanup@1.0.5",
     "@arabasta/report-caught-error:@arabasta/eslint-plugin-report-caught-error@1.0.6",
     "@arabasta/require-useeffect-dependency-array:@arabasta/eslint-plugin-require-useeffect-dependency-array@1.0.9",
-    "@eslint-community/eslint-comments:@eslint-community/eslint-plugin-eslint-comments@4.3.0",
-    "@typescript-eslint:@typescript-eslint/eslint-plugin@8.0.1",
+    "@eslint-community/eslint-comments:@eslint-community/eslint-plugin-eslint-comments@4.4.0",
+    "@typescript-eslint:@typescript-eslint/eslint-plugin@8.3.0",
     "deprecation:eslint-plugin-deprecation@3.0.0",
     "es",
     "import",
@@ -1316,6 +1316,7 @@
     "@typescript-eslint/no-array-delete": ["error"],
     "@typescript-eslint/no-base-to-string": ["error"],
     "@typescript-eslint/no-confusing-void-expression": ["error"],
+    "@typescript-eslint/no-deprecated": ["error"],
     "@typescript-eslint/no-dupe-class-members": ["error"],
     "@typescript-eslint/no-duplicate-enum-values": ["error"],
     "@typescript-eslint/no-duplicate-type-constituents": ["error"],
