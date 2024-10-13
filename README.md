@@ -328,7 +328,10 @@ npm run build
 - Install the packages
 
 ```shell
-npm i -D typescript @babel/preset-typescript fork-ts-checker-webpack-plugin @total-typescript/ts-reset
+npm i -D typescript@~5.5
+npm i -D @babel/preset-typescript
+npm i -D fork-ts-checker-webpack-plugin
+npm i -D @total-typescript/ts-reset
 ```
 
 - Copy the contents of the `extra/08-typescript` directory to the root directory of this workshop.
@@ -544,30 +547,8 @@ npm run format
 
 ```shell
 npm i -D eslint@8
-npm i -D @eslint/eslintrc
-npm i -D @eslint/js
-npm i -D eslint-config-prettier
-npm i -D eslint-import-resolver-alias
-npm i -D eslint-import-resolver-typescript
-npm i -D eslint-plugin-deprecation
-npm i -D eslint-plugin-es
-npm i -D eslint-plugin-import
-npm i -D eslint-plugin-jsx-a11y
-npm i -D eslint-plugin-new-with-error
-npm i -D eslint-plugin-react
-npm i -D eslint-plugin-react-hooks
-npm i -D eslint-plugin-react-refresh
-npm i -D eslint-plugin-testing-library
-npm i -D eslint-plugin-unused-imports@3
-npm i -D eslint-plugin-jest
-npm i -D @arabasta/eslint-plugin-no-destructuring-arrays-as-objects
-npm i -D @arabasta/eslint-plugin-report-caught-error
-npm i -D @arabasta/eslint-plugin-require-useeffect-dependency-array
-npm i -D @eslint-community/eslint-plugin-eslint-comments
-npm i -D confusing-browser-globals
+npm i -D @arabasta/eslint-config
 npm i -D typescript-eslint
-npm i -D rimraf
-npm i -D globals
 ```
 
 - Copy the contents of the `extra/12-eslint` directory to the root directory of this workshop.
@@ -576,20 +557,13 @@ npm i -D globals
 
 ```
 "lint": "eslint ./ --max-warnings 0",
-"lint:fix": "npm run lint -- --fix",
-"generate-eslint-resolved-configs": "rimraf ./eslint-resolved-configs && node generate-eslint-resolved-configs.js && npm run format"
+"lint:fix": "npm run lint -- --fix"
 ```
 
 - Run the `lint:fix` npm script
 
 ```shell
 npm run lint:fix
-```
-
-- Run the `generate-eslint-resolved-configs` npm script
-
-```shell
-npm run generate-eslint-resolved-configs
 ```
 
 - Install the webpack plugin
