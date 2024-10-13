@@ -1,9 +1,8 @@
 module.exports = {
   errorOnDeprecated: true,
   maxWorkers: '100%',
-  setupFiles: ['./jest.polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-fixed-jsdom',
   testEnvironmentOptions: {
     customExportConditions: [''],
   },
