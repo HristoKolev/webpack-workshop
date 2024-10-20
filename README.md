@@ -328,7 +328,7 @@ npm run build
 - Install the packages
 
 ```shell
-npm i -D typescript@~5.5
+npm i -D typescript@~5.6
 npm i -D @babel/preset-typescript
 npm i -D fork-ts-checker-webpack-plugin
 npm i -D @total-typescript/ts-reset
